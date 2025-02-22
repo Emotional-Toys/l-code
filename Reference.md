@@ -303,14 +303,14 @@ Head_Tilt = -45
 |       LOOP       | End DO loop                                                                                |
 |       BREAK      | Break out of loop                                                                          |
 
-GO - Jump to label
+#### `GO` - Jump to label
 The R-Code program moves to jump label.
 
 Usage:
-   GO:label
+   `GO:label`
 
 Example:
-
+```
 // Make AIBO sit & stand repeatedly forever...
 :JumpHere
 PLAY:ACTION:SIT
@@ -318,48 +318,54 @@ WAIT
 PLAY:ACTION:STAND
 WAIT
 GO:JumpHere
+```
 
-
-IF - Conditional test
-Compare two numbers or variables, and perform parameter accordingly.   There are several different flavors of the IF command...
+#### `IF` - Conditional test
+Compare two numbers or variables, and perform parameter accordingly. There are several different flavors of the `IF` command.
 
 Version 1
+```
    IF:<value1>:<op>:<value2>:THEN
       // command block (performed only if comparison succeeds)
    ENDIF
-
+```
 Version 2
+```
    IF:<value1>:<op>:<value2>:THEN
      // then block (performed if comparison succeeds)
    ELSE
      // else block (performed if comparison fails)
    ENDIF
-
+```
 Version 3
+```
    IF:<value1>:<op>:<value2>:CALL:label[:argument-count]
      If comparison succeeds, perform CALL command and jump to subroutine
        at label with optional argument count (see CALL command for details).
-
+```
 Version 4
+```
    IF:<value1>:<op>:<value2>:BREAK
      If comparison succeeds, perform BREAK command and exit nearest loop.
-
+```
 Version 5
+```
    IF:<value1>:<op>:<value2>:match-label
      If comparison succeeds, jump to label "match-label".
-
+```
 Version 6
+```
    IF:<value1>:<op>:<value2>:match-label:else-label
      If comparison succeeds, jump to label "match-label".
      If comparison fails, jump to label "else-label".
-
+```
 Values:
    The `<value>` fields can be either variables or numbers.
 
 Operators:
    The <op> field can be one of the following:
-      `=`    Equals (compare succeeds if both values equal)
-      `==`   Equals (works same as above)
+*      `=`    Equals (compare succeeds if both values equal)
+*      `==`   Equals (works same as above)
       `<>`   Not Equal
       `!=`   Not Equal (works same as above).
       `<`    Less than
