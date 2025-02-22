@@ -803,3 +803,270 @@ VLOAD:somevar   // Load value stored in file /OPEN-R/APP/PC/AMS/SOMEVAR.SAV
 ### _Stack Commands_
 The following commands operate on the stack. R-Code manages the stack in the same manner as Forth: The last item placed on the stack is the first one removed.
 
+|      Command     |                         Action                         |
+|:----------------:|:------------------------------------------------------:|
+|       PUSH       | Add value to stack                                     |
+|        POP       | Remove value from stack                                |
+|        DUP       | Duplicate value on top of stack                        |
+|        JT        | Jump if top-most value on stack non-zero               |
+|        JF        | Jump if top-most value on stack zero                   |
+
+#### `PUSH` - Add Value to Stack
+Add variable or constant value onto the stack.
+
+Usage:
+   `PUSH:<value>`
+
+Example:
+```
+PUSH:42
+PUSH:somevar
+MUL             // Multiply somevar by 42.  Result left on stack.
+```
+
+#### `POP` - Remove Value from Stack
+Remove top-most value from stack. If variable not specified, top-most stack value is discarded. If stack is empty, `POP` can cause an error.
+
+Usage:
+   `POP[:<variable>]`
+
+Examples:
+```
+POP:somevar    // Remove top-most value from stack, and store in somevar
+POP            // Discard next value on stack
+```
+
+#### `DUP` - Duplicate Value on Stack
+Duplicate/copy top-most value on stack.
+
+Example:
+```
+PUSH:7
+DUP           // duplicate value of 7 on stack (now there are two 7's)
+ADD
+POP:somevar   // somevar equals 14
+```
+
+#### `JT` - Jump if True
+Remove top-most value from stack. If non-zero, jump to label.
+
+Usage:
+   `JT:<label>`
+
+Example:
+```
+JT:JumpHere     // POP topmost value from stack.  If non-zero, jump.
+```
+
+#### `JF` - Jump if False
+Remove top-most value from stack. If zero, jump to label.
+
+Usage:
+   `JF:<label>`
+
+Example:
+```
+JF:JumpHere     // POP topmost value from stack.  If zero, jump.
+```
+
+### _Operators_
+
+The following commands perform arithmetic on variables and value parameters.
+
+|             Variable            |                                       Value Parameter                                      |
+|:-------------------------------:|:------------------------------------------------------------------------------------------:|
+| ADD:<var>:<value>               | Add value to variable.    variable = variable + value                                      |
+| SUB:<var>:<value>               | Subtract value from variable.    variable = variable / value                               |
+| MUL:<var>:<value>               | Multiply variable by value.    variable = variable * value                                 |
+| DIV:<var>:<value>               | Divide variable by value.    variable = variable / value                                   |
+| MOD:<var>:<value>               | Remainder of dividing variable by value.    variable = variable % value                    |
+| AND:<var>:<value>               | Bitwise AND variable with value.   variable = variable & value                             |
+| IOR:<var>:<value>               | Bitwise OR variable with value.   variable = variable \| value                             |
+| XOR:<var>:<value>               | Bitwise XOR variable with value.   variable = variable ^ value                             |
+| NOT:<var>                       | Bitwise invert variable.   variable = ~variable                                            |
+| LAND:<var>:<value>              | Logical AND.   If both variable and value non zero, set to 1.   Otherwise 0.               |
+| LIOR:<var>:<value>              | Logical OR.   If either variable or value non zero, set to 1.   Otherwise 0.               |
+| LNOT:<var>                      | Logical NOT.  If variable zero, set to 1.   Otherwise 0.                                   |
+| RND:<var>:<from>:<to>           | Set variable to random number between <from> and <to>.                                     |
+
+Examples:
+```
+ADD:somevar:123
+SUB:anothervar:456
+  
+SET:somevar:0x55
+AND:somevar:0xAA    // somevar equals 0
+  
+SET:somevar:0x55
+IOR:somevar:0xAA    // somevar equals 255 (0xFF in hex)
+  
+SET:somevar:0x55
+LAND:somevar:0xAA   // somevar equals 1 (both non-zero)
+SET:somevar:0
+LAND:somevar:0xAA   // somevar equals 0 (because one value zero)
+  
+SET:somevar:0
+LIOR:somevar:0      // somevar equals 0 (both zero)
+SET:somevar:0
+LIOR:somevar:0xAA   // somevar equals 1 (one value non-zero)
+SET:somevar:0x55
+LIOR:somevar:0      // somevar equals 1 (one value non-zero)
+  
+SET:somevar:0x5555
+NOT:somevar         // somevar equals 0xAAAA
+  
+SET:somevar:0
+LNOT:somevar        // somevar equals 1
+SET:somevar:0x5555
+LNOT:somevar        // somevar equals 0
+  
+RND:somevar:1:10    // somevar set to random value between 1 and 10
+```
+
+### _Stack Operators_
+
+The following commands perform arithmetic on the stack. R-Code manages the stack in the same manner as Forth: The last item placed on the stack is the first one removed. To do math with the stack, first `PUSH` two values then perform the operation and `POP` the result. This is also called _postfix_ notation, as, `3 4 ADD`.
+
+|        Variable        |                                     Value Parameter                                     |
+|:----------------------:|:---------------------------------------------------------------------------------------:|
+| ADD                    | Add value to variable.   <push> = <pop2> + <pop1>                                       |
+| SUB                    | Subtract value from variable.   <push> = <pop2> - <pop1>                                |
+| MUL                    | Multiply variable by value.    <push> = <pop2> * <pop1>                                 |
+| DIV                    | Divide variable by value.    <push> = <pop2> / <pop1>                                   |
+| MOD                    | Remainder of dividing variable by value.    <push> = <pop2> % <pop1>                    |
+| AND                    | Bitwise AND variable with value.   <push> = <pop2> & <pop1>                             |
+| IOR                    | Bitwise OR variable with value.   <push> = <pop2> \| <pop1>                             |
+| XOR                    | Bitwise XOR variable with value.   <push> = <pop2> ^ <pop1>                             |
+| NOT                    | Bitwise invert variable.   <push> = ~<pop>                                              |
+| LAND                   | Logical AND.   If both <pop1> & <pop2> non zero, <push> 1.   Otherwise 0.               |
+| LIOR                   | Logical OR.   If either <pop1> or <pop2> non zero, <push> 1.   Otherwise 0.             |
+| LNOT                   | Logical NOT.  If <pop> value zero, <push> 1.   Otherwise 0.                             |
+| EQ                     | If <pop2> and <pop1> equal, <push> 1.   Otherwise 0.                                    |
+| NE                     | If <pop2> and <pop1> not equal, <push> 1.   Otherwise 0.                                |
+| LT                     | If <pop2> less than <pop1>, <push> 1.   Otherwise 0.                                    |
+| LE                     | If <pop2> less than or equal to <pop1>, <push> 1.   Otherwise 0.                        |
+| GT                     | If <pop2> greater than <pop1>, <push> 1.   Otherwise 0.                                 |
+| GE                     | If <pop2> greater than or equal to <pop1>, <push> 1.   Otherwise 0.                     |
+| RND:<from>:<to>        | <push> random value between <from> and <to>                                             |
+| RND:<to>               | <push> random value between zero and <to>                                               |
+
+Examples:
+```
+PUSH:200
+PUSH:100
+SUB
+POP:somevar         // result is 100 (200-100)
+  
+PUSH 100
+PUSH 2
+PUSH 4
+PUSH 6
+ADD
+MUL
+DIV
+POP:somevar         // result is 5 = 100/((4+6)*2)
+```
+
+### _System Variables_
+
+|               Variable              |                             Value Parameter                            |
+|:-----------------------------------:|:----------------------------------------------------------------------:|
+| AiboId                              | Least significant byte of WLAN IP address. Zero if not connected.      |
+| AiboType                            | 210, 220, 310, or 7                                                    |
+| Year                                | Year (2000 or later)                                                   |
+| Month                               | Month (1-12)                                                           |
+| Day                                 | Date (1-31)                                                            |
+| Hour                                | Hour (0-23)                                                            |
+| Min                                 | Minute (0-59)                                                          |
+| Sec                                 | Second (0-59) - 2 second resolution                                    |
+| Dow                                 | Day of week (0=Sunday, 1=Monday, 2=Tuesday, ..., 6=Saturday)           |
+| Seed                                | Random number seed (default is 1)                                      |
+| Status                              | Startup Status. 0=Normal, 1=Recovery (from falling over)               |
+| Context                             | Context value                                                          |
+| Wait                                | Number of actions/skits queued for playback                            |
+| Clock                               | Clock (incremented by 1 every 32 ms)                                   |
+| Brightness                          | Ambient brightness (0-255)                                             |
+| Pink_Ball                           | Pink ball. Set 1 once detected (clear w/SET)                           |
+| Pink_Ball_H                         | Pink ball horizontal angle (in degrees, 0=center, pos=left, neg=right) |
+| Pink_Ball_V                         | Pink ball vertical angle (in degrees, 0=center, neg=down, pos=up)      |
+| Pink_Ball_D                         | Distance to pink ball from nose camera (in millimeters)                |
+| AU_Voice                            | Set if voice command recognised (clear w/SET)                          |
+| AU_Voice_ID                         | Voice ID (1-53)                                                        |
+| AU_AiboSound                        | Set 1 if AiboSound detected (clear w/SET)                              |
+| AU_AiboSound_ID AiboSound ID (1-35) |                                                                        |
+| AU_AiboTone                         | Set 1 if AiboTone detected (clear w/SET)                               |
+| AU_AiboTone_ID                      | AiboTone ID (1-68)                                                     |
+| Temp_Hi                             | Set if temperature too high. AIBO will auto-shutdown in 20 seconds.    |
+| LFLeg_1                             | Left-front Hip Joint (front/back direction, in degrees)                |
+| LFLeg_2                             | Left-front Hip Joint (left/right direction, in degrees)                |
+| LFLeg_3                             | Left-front Knee Joint (degrees)                                        |
+| LRLeg_1                             | Left-hind Hip Joint (front/back direction, in degrees)                 |
+| LRLeg_2                             | Left-hind Hip Joint (left/right direction, in degrees)                 |
+| LRLeg_3                             | Left-hind Knee Joint (degrees)                                         |
+| RFLeg_1                             | Right-front Hip Joint (front/back direction, in degrees)               |
+| RFLeg_2                             | Right-front Hip Joint (left/right direction, in degrees)               |
+| RFLeg_3                             | Right-front Knee Joint (degrees)                                       |
+| RRLeg_1                             | Right-hind Hip Joint (front/back direction, in degrees)                |
+| RRLeg_2                             | Right-hind Hip Joint (left/right direction, in degrees)                |
+| RRLeg_3                             | Right-hind Knee Joint (degrees)                                        |
+| Batt_Rest                           | Battery charge remainder [%]                                           |
+| Batt_Temp                           | Battery temperature [C]                                                |
+| Body_Temp                           | Body temperature [C]                                                   |
+| Distance                            | Distance to obstacle [mm]                                              |
+| Head_ON                             | Set if head sensor pressed (clear w/SET)                               |
+| Head_LONG                           | Set if head sensor pressed for 3 or more seconds (clear w/SET)         |
+| Head_Pat                            | Set if head sensor stroked back and forth twice (clear w/SET)          |
+| Head_Hit                            | Set if head sensor touched briefly and forcefully (clear w/SET)        |
+| Head_OFF                            | Amount of time head sensor pressed [msecs]                             |
+| Back_ON                             | Set if back sensor pressed (clear w/SET)>                              |
+| Back_LONG                           | Set if back sensor pressed for 3 or more seconds (clear w/SET)         |
+| Back_OFF                            | Amount of time back sensor was pressed [msecs]                         |
+| RFLeg_ON                            | Set if right front paw sensor was pressed (clear w/SET)                |
+| RFLeg_OFF                           | Amount of time right front paw sensor was pressed [msecs]              |
+| LFLeg_ON                            | Set if left front paw sensor was pressed (clear w/SET)                 |
+| LFLeg_OFF                           | Amount of time left front paw sensor was pressed [msecs]               |
+| RRLeg_ON                            | Set if right hind paw sensor was pressed (clear w/SET)                 |
+| RRLeg_OFF                           | Amount of time right hind paw sensor was pressed [msecs]               |
+| LRLeg_ON                            | Set if left hind paw sensor was pressed (clear w/SET)                  |
+| LRLeg_OFF                           | Amount of time left hind paw sensor was pressed [msecs]                |
+
+### _Platform Specific Variables_
+```
+ERS-210
+   Head_Tilt       Head Up/Down Angle (degrees) 
+   Head_Pan        Head Left/Right Angle (degrees)
+   Head_Roll       Head Roll Angle (side-to-side, degrees)
+   Mouth           Mouth (degrees)
+   Jaw_ON          Set if chin sensor pressed (clear w/SET)
+   Jaw_OFF         Length of time face sensor was pressed [ms]
+   Jaw_LONG        Set if chin sensor was pressed for 3 or more seconds (clear w/SET)
+   Tail_Pan        Tail: horizontal (left/right) angle [degrees]
+   Tail_Tilt       Tail: Vertical (up/down) angle [degrees]
+  
+ERS-220
+   Head_Tilt       Head: vertical (up-down) angle [degrees]
+   Head_Pan        Head: horizontal (left-right) angle [degrees]
+   Head_Roll       Head: roll angle [degrees]
+   Jaw_ON          Face sensor pressed (clear w/SET)
+   Jaw_OFF         Length of time face sensor was pressed [ms]
+   Jaw_LONG        Face sensor was pressed for 3 seconds or longer (clear w/SET)    
+  
+ERS-310
+   Head_Tilt       Head: vertical (up-down) angle 1 [degrees]
+   Head_Tilt_2     Head: vertical (up-down) angle 2 [degrees]
+   Head_Pan        Head: horizontal (left-right) angle [degrees]
+
+   Tail_Roll3      Tail rotated 3 times (in either direction)(clear w/SET)
+   Tail_RollR      Tail rotated clockwise (clear w/SET)
+   Tail_RollL      Tail rotated counterclockwise (clear w/SET)
+   Tail_U_LONG     Tail pressed forward 3 seconds (clear w/SET)
+   Tail_D_LONG     Tail pressed backward 3 seconds (clear w/SET)
+   Tail_R_LONG     Tail pressed right 3 seconds (clear w/SET)
+   Tail_L_LONG     Tail pressed left 3 seconds (clear w/SET)
+   Tail_U_ON       Tail pressed forward (clear w/SET)
+   Tail_D_ON       Tail pressed backward (clear w/SET)
+   Tail_R_ON       Tail pressed right (clear w/SET)
+   Tail_L_ON       Tail pressed left (clear w/SET)
+```
+
+#### END
