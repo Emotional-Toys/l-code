@@ -7,7 +7,18 @@ The code reference for R-Code, version 1.2. It might be also valid for version 3
 1. [Text Formatting Requirements](#text)
 2. [Comments](#comments)
 3. [Jump Labels](#jump)
-3. [Numbers](#numbers)
+4. [Numbers](#numbers)
+5. [Control Commands](#control)
+6. [Action/Skit Commands](#action)
+7. [Debug Commands](#debug)
+8. [Jump/Loop Commands](#loop)
+9. [Subroutine Commands](#subroutine)
+10. [Variable Declare and Assign](#variable)
+11. [Stack Commands](#stack)
+12. [Operators](#operators)
+13. [Stack Operators](#soperators)
+14. [System Variables](#system)
+15. [Platform-Specific Variables](#platform)
 
 ## Descriptives
 
@@ -66,7 +77,7 @@ SET:octnum:0o34567      // Octal number (14711 in decimal)
 SET:binnum:0b01010101   // Binary number (85 in decimal) 
 ```
 
-### _Control Commands_
+### _Control Commands_ <a name="control"></a>
 
 | Command |                   Action                   |
 |:-------:|:------------------------------------------:|
@@ -245,7 +256,7 @@ STOP
 
 Empty the skit/action playback queue, and all playback immediately.   Can leave AIBO in an unknown posture, forcing a stretch to reset things.   Not recommended for normal use.
 
-### _Debug Commands_
+### _Debug Commands_ <a name="debug"></a>
 
 |       Command       |                                 Action                                |
 |:-------------------:|:---------------------------------------------------------------------:|
@@ -287,7 +298,7 @@ Output appears as follows:
 Head_Tilt = -45
 ```
 
-### _Jump/Loop Commands_
+### _Jump/Loop Commands_ <a name="loop"></a>
 
 |      Command     |                                           Action                                           |
 |:----------------:|:------------------------------------------------------------------------------------------:|
@@ -366,7 +377,7 @@ _Values_
    The `<value>` fields can be either variables or numbers.
 
 _Operators_
-   The <op> field can be one of the following:
+   The `<op>` field can be one of the following:
 ```
      =    Equals (compare succeeds if both values equal)
      ==   Equals (works same as above)
@@ -415,7 +426,7 @@ SWITCH:some_var
 ```
 
 #### `CSET` - Conditional test and Context Assign for `CASE` statement
-Perform comparison and set context if successful.    On a successful match, subsequent CSET's are skipped.
+Perform comparison and set context if successful. On a successful match, subsequent `CSET`'s are skipped.
 
 Usage:
    `CSET:<value1>:<op>:<value2>:<context-value>`
@@ -436,8 +447,8 @@ CASE:5:SET:some_var:55
 CASE:6:GO:JumpHere
 ```
 
-#### `CASE` - Perform parameter if Context matches value
-Compare context to parameter value. If equal, perform command.  Alternately, can use `ELSE` instead of value. In which case, command is performed if all previous `CASE` statements failed.
+#### `CASE` - Perform parameter if context matches value
+Compare context to parameter value. If equal, perform command. Alternately, can use `ELSE` instead of value. In which case, command is performed if all previous `CASE` statements failed.
 
 Version 1
    `CASE:<value>:<command>`
@@ -579,9 +590,7 @@ LOOP:UNTIL:Back_ON:>:0
 ```
 
 #### `BREAK` - Break out of loop
-Break out of loops.   Convenient for exiting a loop early, perhaps if a sensor detects something unusual.  Works with `FOR`/`NEXT`, `WHILE`/`WEND`, `REPEAT`/`UNTIL`, or `DO`/`LOOP`.
-
-You can break out of multiple nested loops with a single `BREAK` by giving the optional level parameter.
+Break out of loops.   Convenient for exiting a loop early, perhaps if a sensor detects something unusual. Works with `FOR`/`NEXT`, `WHILE`/`WEND`, `REPEAT`/`UNTIL`, or `DO`/`LOOP`. It is possible to break-out of multiple nested loops with a single `BREAK` by giving the optional level parameter.
 
 Usage:
    `BREAK[:<level>]`
@@ -607,7 +616,7 @@ FOR:some_var:1:10
 NEXT
 ```
 
-### _Subroutine Commands_
+### _Subroutine Commands_ <a name="subroutine"></a>
 
 | Command |                  Action                  |
 |:-------:|:----------------------------------------:|
@@ -696,7 +705,7 @@ PRINT:"Entered MySubroutine"
 RET:1
 ```
 
-### _Variable Declare and Assign_
+### _Variable Declare and Assign_ <a name="variable"></a>
 
 |       Command       |                         Action                        |
 |:-------------------:|:-----------------------------------------------------:|
@@ -803,7 +812,7 @@ Example:
 VLOAD:somevar   // Load value stored in file /OPEN-R/APP/PC/AMS/SOMEVAR.SAV
 ```
 
-### _Stack Commands_
+### _Stack Commands_ <a name="stack"></a>
 The following commands operate on the stack. R-Code manages the stack in the same manner as Forth: The last item placed on the stack is the first one removed.
 
 |      Command     |                         Action                         |
@@ -872,7 +881,7 @@ Example:
 JF:JumpHere     // POP topmost value from stack.  If zero, jump.
 ```
 
-### _Operators_
+### _Operators_ <a name="operators"></a>
 
 The following commands perform arithmetic on variables and value parameters.
 
@@ -926,7 +935,7 @@ LNOT:somevar        // somevar equals 0
 RND:somevar:1:10    // somevar set to random value between 1 and 10
 ```
 
-### _Stack Operators_
+### _Stack Operators_ <a name="soperators"></a>
 
 The following commands perform arithmetic on the stack. R-Code manages the stack in the same manner as Forth: The last item placed on the stack is the first one removed. To do math with the stack, first `PUSH` two values then perform the operation and `POP` the result. This is also called _postfix_ notation, as, `3 4 ADD`.
 
@@ -970,7 +979,7 @@ DIV
 POP:somevar         // result is 5 = 100/((4+6)*2)
 ```
 
-### _System Variables_
+### _System Variables_ <a name="system"></a>
 
 |               Variable              |                             Value Parameter                            |
 |:-----------------------------------:|:----------------------------------------------------------------------:|
@@ -1033,7 +1042,7 @@ POP:somevar         // result is 5 = 100/((4+6)*2)
 | LRLeg_ON                            | Set if left hind paw sensor was pressed (clear w/SET)                  |
 | LRLeg_OFF                           | Amount of time left hind paw sensor was pressed [msecs]                |
 
-### _Platform Specific Variables_
+### _Platform-Specific Variables_ <a name="platform"></a>
 ```
 ERS-210
    Head_Tilt       Head Up/Down Angle (degrees) 
