@@ -875,10 +875,10 @@ The following commands perform arithmetic on variables and value parameters.
 
 |             Variable            |                                       Value Parameter                                      |
 |:-------------------------------:|:------------------------------------------------------------------------------------------:|
-| ADD:<var>:<value>               | Add value to variable.    variable = variable + value                                      |
-| SUB:<var>:<value>               | Subtract value from variable.    variable = variable / value                               |
-| MUL:<var>:<value>               | Multiply variable by value.    variable = variable * value                                 |
-| DIV:<var>:<value>               | Divide variable by value.    variable = variable / value                                   |
+| `ADD:<var>:<value>`             | Add value to variable.    variable = variable + value                                      |
+| `SUB:<var>:<value>`             | Subtract value from variable.    variable = variable / value                               |
+| `MUL:<var>:<value>`             | Multiply variable by value.    variable = variable * value                                 |
+| `DIV:<var>:<value>`             | Divide variable by value.    variable = variable / value                                   |
 | MOD:<var>:<value>               | Remainder of dividing variable by value.    variable = variable % value                    |
 | AND:<var>:<value>               | Bitwise AND variable with value.   variable = variable & value                             |
 | IOR:<var>:<value>               | Bitwise OR variable with value.   variable = variable \| value                             |
