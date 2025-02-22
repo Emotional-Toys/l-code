@@ -74,4 +74,63 @@ _Control Commands_
 |   HALT  | Shutdown AIBO (power off)                  |
 |   INIT  | Restart AIBO (reinitialize)                |
 |    !    | Force program to stop.                     |
+|    !!   | Stop program.                              |
+
+#### `EDIT` - Load New Program
+
+Place AIBO into program load mode. Any previously loaded program is erased. Normally used for transferring programs from your PC to AIBO, such as with Aibnet. Stop program load with END command.
+
+Example:
+```
+EDIT
+// Make AIBO sit & stand repeatedly forever...
+:JumpHere
+PLAY:ACTION:SIT
+WAIT
+PLAY:ACTION:STAND
+WAIT
+GO:JumpHere
+END
+```
+
+#### `END` - End Program Load Mode
+
+Use only in conjunction with `EDIT`.   See above.
+
+#### `RUN` - Begin Program
+
+Make AIBO start performing program loaded with `EDIT`/`END` commands.
+
+#### `EXIT` - Stop Program
+
+Make AIBO stop performing program. Can be used within a loaded _running_ program to stop itself. Any skit being played will continue to run until finished.
+
+#### `HALT` - Shutdown AIBO
+
+Make AIBO stop performing program and shutdown. Can be used within a loaded _running_ program to make AIBO turn itself off - for example if the battery gets low.
+
+#### `INIT` - Restart/Reinitialize AIBO
+
+Restart the R-Code parser. 
+
+Usage:
+   `INIT:<init-level>`
+
+Only use values `2` or `9`. All others are reserved or undefined.
+
+Examples:
+```
+INIT:2   // Reset dictionary & variable tables.
+INIT:9   // Shutdown & reboot AIBO
+```
+
+#### `!` - Force Program to Stop
+
+Force AIBO to stop performing program, and cancel playback immediately also. Leaves AIBO in an unknown posture.
+
+#### `!!` - Normal Program Stop
+
+Make AIBO to stop performing program. Same as `EXIT` command. Any skit being played will continue to run until finished.
+
+### Action/Skit Commands
 
