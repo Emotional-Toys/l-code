@@ -2,7 +2,7 @@
 
 The code reference for R-Code, version 1.2. It might be also valid for version 3 (ERS-7).
 
-### Index
+### Index of Features
 
 1. [Text Formatting Requirements](#text)
 2. [Comments](#comments)
@@ -20,7 +20,18 @@ The code reference for R-Code, version 1.2. It might be also valid for version 3
 14. [System Variables](#system)
 15. [Platform-Specific Variables](#platform)
 
-## Descriptives
+### Index of Commands
+
+| EDIT   | END   | RUN    | EXIT | HALT | INIT  | !     |        |     |       |      |      |     |
+| PLAY   | WAIT  | STOP   | QUIT |      |       |       |        |     |       |      |      |     |
+| PRINT  | VDUMP |        |      |      |       |       |        |     |       |      |      |     |
+| GO     | IF    | SWITCH | CSET | CASE | FOR   | WHILE | REPEAT | DO  | BREAK |      |      |     |
+| CALL   | ARG   | RETURN | RET  |      |       |       |        |     |       |      |      |     |
+| GLOBAL | LOCAL | LET    | SET  | CLR  | VSAVE | VLOAD |        |     |       |      |      |     |
+| PUSH   | POP   | DUP    | JT   | JF   |       |       |        |     |       |      |      |     |
+| ADD    | SUB   | MUL    | DIV  | MOD  | AND   | IOR   | XOR    | NOT | LAND  | LIOR | LNOT | RND |
+
+## Features
 
 ### _Text Formatting Requirements_ <a name="text"></a>
 
@@ -38,7 +49,7 @@ PLAY:ACTION:STAND
 
 ### _Comments_ <a name="comments"></a>
 
-You can place comments - text which the interpreter skips - by using double-slashes `//`.
+Place comments - text which the interpreter skips - by using double-slashes `//`.
 
 Example:
 ```
