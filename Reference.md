@@ -24,13 +24,13 @@ The code reference for R-Code, version 1.2. It might be also valid for version 3
 
 | Commands      |       |        |      |      |       |       |        |     |       |      |      |     |
 |---------------|-------|--------|------|------|-------|-------|--------|-----|-------|------|------|-----|
-| [EDIT](#edit) | [END](#end)  | [RUN](#run)    | [EXIT](#exit) | [HALT](#halt) | [INIT](#init)  | [!](#!)     | [!!](#!!)      |     |       |      |      |     |
-| PLAY          | WAIT  | STOP   | QUIT |      |       |       |        |     |       |      |      |     |
-| PRINT         | VDUMP |        |      |      |       |       |        |     |       |      |      |     |
-| GO            | IF    | SWITCH | CSET | CASE | FOR   | WHILE | REPEAT | DO  | BREAK |      |      |     |
-| CALL          | ARG   | RETURN | RET  |      |       |       |        |     |       |      |      |     |
-| GLOBAL        | LOCAL | LET    | SET  | CLR  | VSAVE | VLOAD |        |     |       |      |      |     |
-| PUSH          | POP   | DUP    | JT   | JF   |       |       |        |     |       |      |      |     |
+| [EDIT](#edit) | [END](#end)| [RUN](#run) | [EXIT](#exit) | [HALT](#halt) | [INIT](#init) | [!](#!) | [!!](#!!) |     |       |      |      |     |
+| [PLAY](#play) | [WAIT](#wait) | [STOP](#stop)   | [QUIT](#quit) |      |       |       |        |     |       |      |      |     |
+| [PRINT](#print) | [VDUMP](#vdump) |        |      |      |       |       |        |     |       |      |      |     |
+| [GO](#go)       | [IF](#if)    | [SWITCH](#switch) | [CSET](#cset) | [CASE](#case) | [FOR](#for)   | [WHILE](#while) | [REPEAT](#repeat) | [DO](#do)  | [BREAK](#break) |      |      |     |
+| [CALL](#call)   | [ARG](#arg)   | [RETURN](#return) | [RET](#ret)  |      |       |       |        |     |       |      |      |     |
+| [GLOBAL](#global) | [LOCAL](#local) | [LET](#let) | [SET](#set)  | [CLR](#clr) | [VSAVE](#vsave) |[VLOAD](#vload) |        |     |       |      |      |     |
+| [PUSH](#push) | [POP](#pop)   | [DUP](#dup)    | [JT](#jt)   | [JF](#jf)   |       |       |        |     |       |      |      |     |
 | ADD           | SUB   | MUL    | DIV  | MOD  | AND   | IOR   | XOR    | NOT | LAND  | LIOR | LNOT | RND |
 
 ## Features
@@ -168,7 +168,7 @@ Make AIBO to stop performing program. Same as `EXIT` command. Any skit being pla
 |        STOP        | Empty skit/action queue, and stop autorepeating skits (such as tail wagging).               |
 |        QUIT        | Empty skit/action queue, and immediately stop skit playback.                                |
 
-#### `PLAY` - Perform skit/action
+#### `PLAY` - Perform skit/action <a name="play"></a>
 
 Add a skit or action to the playback queue. You can dispatch several skits at once, and AIBO will perform them sequentially in turn. The R-Code program continues to run while the skit is being performed. If you want to pause the program until the skit finishes, see the WAIT command.
 
@@ -217,7 +217,7 @@ PLAY:ACTION:SEARCH:PINK_BALL  // Search for the ball
 WAIT
 ```
 
-#### `WAIT` - Pause Program 
+#### `WAIT` - Pause Program <a name="wait"></a>
 
 Pause R-Code program temporarily from doing anything else.
 
@@ -255,7 +255,7 @@ PLAY:ACTION:STAND
 WAIT        // Pause R-Code until STAND action finished.
 ```
 
-#### `STOP` - Empty Playback Queue
+#### `STOP` - Empty Playback Queue <a name="stop"></a>
 Empty the skit/action playback queue, and stop autorepeating skits once last iteration finishes.
 
 Example:
@@ -265,7 +265,7 @@ WAIT:2000                     // ...for two seconds
 STOP
 ```
 
-#### `QUIT` - Empty Playback Queue, and Stop Playback Immediately
+#### `QUIT` - Empty Playback Queue, and Stop Playback Immediately <a name="quit"></a>
 
 Empty the skit/action playback queue, and all playback immediately.   Can leave AIBO in an unknown posture, forcing a stretch to reset things.   Not recommended for normal use.
 
@@ -276,7 +276,7 @@ Empty the skit/action playback queue, and all playback immediately.   Can leave 
 |        PRINT        | Display a message, or contents of one or more variables               |
 |        VDUMP        | Show value of variable                                                |
 
-#### `PRINT` - Display a Message
+#### `PRINT` - Display a Message <a name="print"></a>
 Display a message, and optionally the value of one or more variables. Useful only if connected over WLAN.
 
 Usage:
@@ -294,7 +294,7 @@ Output appears as follows:
 Head_Tilt=-45   Head_Pan=-20
 ```
 
-#### `VDUMP` - Show value of variable
+#### `VDUMP` - Show value of variable <a name="vdump"></a>
 Second method for showing variable value. Outputs variable name and its value to the WLAN console.
 
 Usage:
@@ -330,7 +330,7 @@ Head_Tilt = -45
 |       LOOP       | End DO loop                                                                                |
 |       BREAK      | Break out of loop                                                                          |
 
-#### `GO` - Jump to label
+#### `GO` - Jump to label <a name="go"></a>
 The R-Code program moves to jump label.
 
 Usage:
@@ -347,7 +347,7 @@ WAIT
 GO:JumpHere
 ```
 
-#### `IF` - Conditional test
+#### `IF` - Conditional test <a name="if"></a>
 Compare two numbers or variables, and perform parameter accordingly. There are several different flavors of the `IF` command.
 
 Version 1
@@ -420,7 +420,7 @@ PRINT:"Jaw Sensor Pressed"
 GO:JumpHere
 ```
 
-#### `SWITCH` - Assign Context for `CASE` statement
+#### `SWITCH` - Assign Context for `CASE` statement <a name="switch"></a>
 Set context for multiple branching with `CASE` statement. A useful shorthand for comparing a value against multiple numbers. Should be immediately followed by one or more `CASE` statements.
 
 Usage:
@@ -438,7 +438,7 @@ SWITCH:some_var
   CASE:ELSE:PRINT:"some_var = Unknown"
 ```
 
-#### `CSET` - Conditional test and Context Assign for `CASE` statement
+#### `CSET` - Conditional test and Context Assign for `CASE` statement <a name="cset"></a>
 Perform comparison and set context if successful. On a successful match, subsequent `CSET`'s are skipped.
 
 Usage:
@@ -460,7 +460,7 @@ CASE:5:SET:some_var:55
 CASE:6:GO:JumpHere
 ```
 
-#### `CASE` - Perform parameter if context matches value
+#### `CASE` - Perform parameter if context matches value <a name="case"></a>
 Compare context to parameter value. If equal, perform command. Alternately, can use `ELSE` instead of value. In which case, command is performed if all previous `CASE` statements failed.
 
 Version 1
@@ -481,7 +481,7 @@ SWITCH:some_var
   CASE:ELSE:PRINT:"some_var = Unknown"
 ```
 
-#### `FOR` / `NEXT` - Repeat nested commands
+#### `FOR` / `NEXT` - Repeat nested commands <a name="for"></a>
 Repeat nested commands specified number of times. Variable gets set to `<from-value>`, and is then incremented by `1` on each pass until matches `<to-value>`.  The optional `<step-value>` can change the increment, or even make it negative for counting backwards.
 
 Version 1
@@ -512,7 +512,7 @@ FOR:some_var:50:0:-10
 NEXT
 ```
 
-#### `WHILE` / `WEND` - Repeat nested commands while test true
+#### `WHILE` / `WEND` - Repeat nested commands while test true <a name="while"></a>
 Repeat nested commands while comparison succeeds.  Note: If comparison fails on first attempt, nested commands are not performed at all! Comparison occurs before nested commands performed.
 
 Usage:
@@ -534,7 +534,7 @@ WHILE:Back_ON:==:0
 WEND
 ```
 
-#### `REPEAT` / `UNTIL` - Repeat nested commands until test true
+#### `REPEAT` / `UNTIL` - Repeat nested commands until test true <a name="until"></a>
 Repeat nested commands until comparison succeeds. Nested commands always performed at least once. Comparison occurs after nested commands performed.
 
 Usage:
@@ -556,7 +556,7 @@ REPEAT
 UNTIL:Back_ON:>:0
 ```
 
-#### `DO` / `LOOP` - Repeat nested commands while or until test true
+#### `DO` / `LOOP` - Repeat nested commands while or until test true <a name="do"></a>
 Repeat nested commands. Optionally supports comparing values both before and after nested commands performed.
 
 Usage:
@@ -602,7 +602,7 @@ DO:WHILE:Jaw_ON:==:0
 LOOP:UNTIL:Back_ON:>:0
 ```
 
-#### `BREAK` - Break out of loop
+#### `BREAK` - Break out of loop <a name="break"></a>
 Break out of loops.   Convenient for exiting a loop early, perhaps if a sensor detects something unusual. Works with `FOR`/`NEXT`, `WHILE`/`WEND`, `REPEAT`/`UNTIL`, or `DO`/`LOOP`. It is possible to break-out of multiple nested loops with a single `BREAK` by giving the optional level parameter.
 
 Usage:
@@ -638,7 +638,7 @@ NEXT
 |  RETURN | Return from subroutine                   |
 |   RET   | Return from subroutine (context version) |
 
-#### `CALL` - Call a Subroutine
+#### `CALL` - Call a Subroutine <a name="call"></a>
 The R-Code program moves to the given label, but remembers where it came from. Using `RET` or `RETURN` resumes at the old location. You can pass arguments to subroutines by `PUSH`ing them beforehand. Arguments allow reusing a subroutine in different places, without dedicating variables. See ARG command for details.
 
 Usage:
@@ -655,7 +655,7 @@ PRINT:"Hello"
 RET
 ```
 
-#### `ARG` - Get Stack Argument for Subroutine
+#### `ARG` - Get Stack Argument for Subroutine <a name="arg"></a>
 Extracts an argument `PUSH`ed before calling a subroutine. The same number of arguments must be retrieved as were pushed. The first argument pushed is the first retrieved.
 
 Usage:
@@ -680,7 +680,7 @@ PRINT:"Subroutine Args = %d %d %d":somevar1:somevar2:somevar3
 RET
 ```
 
-#### `RETURN` - Return from Subroutine (stack version)
+#### `RETURN` - Return from Subroutine (stack version) <a name="return"></a>
 Return to R-Code position following `CALL` command. If returning optional value, then use the `POP` command to retrieve result.
 
 Usage:
@@ -699,7 +699,7 @@ PRINT:"Entered MySubroutine"
 RETURN:123
 ```
 
-#### `RET` - Return from Subroutine (context version)
+#### `RET` - Return from Subroutine (context version) <a name="ret"></a>
 Return to R-Code position following `CALL` command. Return value placed into Context variable, for use with `CASE` statement. If value not given, or zero is returned, original Context value on entry to subroutine is returned.
 
 Usage:
@@ -730,7 +730,7 @@ RET:1
 |        VSAVE        | Save variable value to memory stick                   |
 |        VLOAD        | Load variable value from memory stick                 |
 
-#### `GLOBAL` - Declare Global Variable
+#### `GLOBAL` - Declare Global Variable <a name="global"></a>
 Define a global variable visible to entire program.  Not generally needed, since AIBO makes all unknown new variables global by default. Can be used to optionally assign a value.
 
 Usage:
@@ -742,7 +742,7 @@ GLOBAL:somevar               // Declare variable, defaults to zero.
 GLOBAL:anothervar:123        // Declare another, defaulted to 123.
 ```
 
-#### `LOCAL` - Declare Local Variable
+#### `LOCAL` - Declare Local Variable <a name="local"></a>
 Define a local variable visible in current scope only. Scope means something like a subroutine, or loop, e.g., `WHILE`/`WEND`.
 
 Example:
@@ -751,7 +751,7 @@ LOCAL:somevar               // Declare variable, defaults to zero.
 LOCAL:anothervar:123        // Declare another, defaulted to 123.
 ```
 
-#### `LET` - Assign Variable a Value
+#### `LET` - Assign Variable a Value <a name="let"></a>
 Specify value variable to be equal to.
 
 Usage:
@@ -762,7 +762,7 @@ Example:
 LET:somevar:123       // Assign user variable
 ```
 
-#### `SET` - Assign Variable (plus system functions)
+#### `SET` - Assign Variable (plus system functions) <a name="set"></a>
 Specify value variable to be equal to. Also can clear sensor variables. Generally you can safely use `SET` for all assignments as there are only special reasons to use `LET`.
 
 Usage:
@@ -796,14 +796,14 @@ SET:somevar:123       // Assign user variable
 SET:Head_ON:0         // Clear Head_ON sensor
 ```
 
-#### `CLR:SENSORS` - Clear Sensor Variables
+#### `CLR:SENSORS` - Clear Sensor Variables <a name="clr"></a>
 Sets to zero all persistent sensor variables for those which store previous values.
 
 Usage:
    `CLR:SENSORS`
 
 
-#### `VSAVE` - Save Variable
+#### `VSAVE` - Save Variable <a name="vsave"></a>
 Save variable value to memory stick. The variable name is used as a filename with a maximum name length of 8 characters. Use `VLOAD` to read it back. Good for storing learned information.
 
 Usage:
@@ -814,7 +814,7 @@ Example:
 VSAVE:somevar   // Save value to /OPEN-R/APP/PC/AMS/SOMEVAR.SAV
 ```
 
-#### `VLOAD` - Load Variable
+#### `VLOAD` - Load Variable <a name="vload"></a>
 Load value from memory stick. The variable name is used as a filename with a maximum name length of 8 characters.
 
 Usage:
@@ -836,7 +836,7 @@ The following commands operate on the stack. R-Code manages the stack in the sam
 |        JT        | Jump if top-most value on stack non-zero               |
 |        JF        | Jump if top-most value on stack zero                   |
 
-#### `PUSH` - Add Value to Stack
+#### `PUSH` - Add Value to Stack <a name="push"></a>
 Add variable or constant value onto the stack.
 
 Usage:
@@ -849,7 +849,7 @@ PUSH:somevar
 MUL             // Multiply somevar by 42.  Result left on stack.
 ```
 
-#### `POP` - Remove Value from Stack
+#### `POP` - Remove Value from Stack <a name="pop"></a>
 Remove top-most value from stack. If variable not specified, top-most stack value is discarded. If stack is empty, `POP` can cause an error.
 
 Usage:
@@ -861,7 +861,7 @@ POP:somevar    // Remove top-most value from stack, and store in somevar
 POP            // Discard next value on stack
 ```
 
-#### `DUP` - Duplicate Value on Stack
+#### `DUP` - Duplicate Value on Stack <a name="dup"></a>
 Duplicate/copy top-most value on stack.
 
 Example:
@@ -872,7 +872,7 @@ ADD
 POP:somevar   // somevar equals 14
 ```
 
-#### `JT` - Jump if True
+#### `JT` - Jump if True <a name="jt"></a>
 Remove top-most value from stack. If non-zero, jump to label.
 
 Usage:
@@ -883,7 +883,7 @@ Example:
 JT:JumpHere     // POP topmost value from stack.  If non-zero, jump.
 ```
 
-#### `JF` - Jump if False
+#### `JF` - Jump if False <a name="jf"></a>
 Remove top-most value from stack. If zero, jump to label.
 
 Usage:
