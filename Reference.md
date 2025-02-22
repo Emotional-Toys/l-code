@@ -364,20 +364,21 @@ Values:
 
 Operators:
    The <op> field can be one of the following:
-*      `=`    Equals (compare succeeds if both values equal)
-*      `==`   Equals (works same as above)
-      `<>`   Not Equal
-      `!=`   Not Equal (works same as above).
-      `<`    Less than
-      `<=`   Less than, or Equal
-      `>`    Greater than
-      `>=`   Greater than, or Equal
-      `&`    Succeed if bitwise AND of values is non-zero
-      `|`    Succeed if either value non-zero (bitwise OR of values)
-      `^`    Succeed if bitwise XOR of values is non-zero
-      `&&`   Succeed if both values non-zero
-      `||`   Succeed if either value non-zero
-
+```
+     =    Equals (compare succeeds if both values equal)
+     ==   Equals (works same as above)
+     <>   Not Equal
+     !=   Not Equal (works same as above).
+     <    Less than
+     <=   Less than, or Equal
+     >    Greater than
+     >=   Greater than, or Equal
+     &    Succeed if bitwise AND of values is non-zero
+     |    Succeed if either value non-zero (bitwise OR of values)
+     ^    Succeed if bitwise XOR of values is non-zero
+     &&   Succeed if both values non-zero
+     ||   Succeed if either value non-zero
+```
 Examples:
 ```
 :JumpHere
