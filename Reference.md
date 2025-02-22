@@ -359,10 +359,10 @@ Version 6
      If comparison succeeds, jump to label "match-label".
      If comparison fails, jump to label "else-label".
 ```
-Values:
+_Values_
    The `<value>` fields can be either variables or numbers.
 
-Operators:
+_Operators_
    The <op> field can be one of the following:
 ```
      =    Equals (compare succeeds if both values equal)
@@ -605,4 +605,93 @@ NEXT
 ```
 
 ### _Subroutine Commands_
+
+| Command |                  Action                  |
+|:-------:|:----------------------------------------:|
+|   CALL  | Call subroutine                          |
+|   ARG   | Retrieve subroutine argument             |
+|  RETURN | Return from subroutine                   |
+|   RET   | Return from subroutine (context version) |
+
+#### `CALL` - Call a Subroutine
+The R-Code program moves to the given label, but remembers where it came from. Using `RET` or `RETURN` resumes at the old location. You can pass arguments to subroutines by `PUSH`ing them beforehand. Arguments allow reusing a subroutine in different places, without dedicating variables. See ARG command for details.
+
+Usage:
+   `CALL:label[:argument-count]`
+
+Example:
+```
+:JumpHere
+CALL:SayHello
+GO:JumpHere
+  
+:SayHello
+PRINT:"Hello"
+RET
+```
+
+#### `ARG` - Get Stack Argument for Subroutine
+Extracts an argument `PUSH`ed before calling a subroutine. The same number of arguments must be retrieved as were pushed. The first argument pushed is the first retrieved.
+
+Usage:
+   `ARG:<variable>`
+
+Example:
+```
+:JumpHere
+PUSH:10
+PUSH:Back_ON
+PUSH:42
+CALL:MySubroutine:3    // Tell subroutine there are 3 arguments
+PRINT:"Back Again"
+GO:JumpHere
+  
+// Subroutine starts here...
+:MySubroutine
+ARG:somevar1
+ARG:somevar2
+ARG:somevar3
+PRINT:"Subroutine Args = %d %d %d":somevar1:somevar2:somevar3
+RET
+```
+
+#### `RETURN` - Return from Subroutine (stack version)
+Return to R-Code position following `CALL` command. If returning optional value, then use the `POP` command to retrieve result.
+
+Usage:
+   `RETURN[:<value>]`
+
+Example:
+```
+:JumpHere
+CALL:MySubroutine
+POP:somevar
+PRINT:"Subroutine result = %d":somevar
+GO:JumpHere
+  
+:MySubroutine
+PRINT:"Entered MySubroutine"
+RETURN:123
+```
+
+#### `RET` - Return from Subroutine (context version)
+Return to R-Code position following `CALL` command. Return value placed into Context variable, for use with `CASE` statement. If value not given, or zero is returned, original Context value on entry to subroutine is returned.
+
+Usage:
+  `RET:<new-context-value>`
+
+Example:
+```
+CALL:MySubroutine
+CASE:1:GO:JumpHere
+CASE:2:GO:JumpThere
+CASE:3:GO:JumpSomewere
+// etc...
+  
+:MySubroutine
+PRINT:"Entered MySubroutine"
+RET:1
+```
+
+### _Variable Declare and Assign_
 
