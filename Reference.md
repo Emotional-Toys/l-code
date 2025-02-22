@@ -24,7 +24,7 @@ The code reference for R-Code, version 1.2. It might be also valid for version 3
 
 | Commands      |       |        |      |      |       |       |        |     |       |      |      |     |
 |---------------|-------|--------|------|------|-------|-------|--------|-----|-------|------|------|-----|
-| [EDIT](#edit) | END   | RUN    | EXIT | HALT | INIT  | !     |        |     |       |      |      |     |
+| [EDIT](#edit) | [END](#end)  | [RUN](#run)    | [EXIT](#exit) | [HALT](#halt) | [INIT](#init)  | [!](#!)     | [!!](#!!)      |     |       |      |      |     |
 | PLAY          | WAIT  | STOP   | QUIT |      |       |       |        |     |       |      |      |     |
 | PRINT         | VDUMP |        |      |      |       |       |        |     |       |      |      |     |
 | GO            | IF    | SWITCH | CSET | CASE | FOR   | WHILE | REPEAT | DO  | BREAK |      |      |     |
@@ -120,23 +120,23 @@ GO:JumpHere
 END
 ```
 
-#### `END` - End Program Load Mode
+#### `END` - End Program Load Mode <a name="end"></a>
 
 Use only in conjunction with `EDIT`.   See above.
 
-#### `RUN` - Begin Program
+#### `RUN` - Begin Program <a name="run"></a>
 
 Make AIBO start performing program loaded with `EDIT`/`END` commands.
 
-#### `EXIT` - Stop Program
+#### `EXIT` - Stop Program <a name="exit"></a>
 
 Make AIBO stop performing program. Can be used within a loaded _running_ program to stop itself. Any skit being played will continue to run until finished.
 
-#### `HALT` - Shutdown AIBO
+#### `HALT` - Shutdown AIBO <a name="halt"></a>
 
 Make AIBO stop performing program and shutdown. Can be used within a loaded _running_ program to make AIBO turn itself off - for example if the battery gets low.
 
-#### `INIT` - Restart/Reinitialize AIBO
+#### `INIT` - Restart/Reinitialize AIBO <a name="init"></a>
 
 Restart the R-Code parser. 
 
@@ -151,11 +151,11 @@ INIT:2   // Reset dictionary & variable tables.
 INIT:9   // Shutdown & reboot AIBO
 ```
 
-#### `!` - Force Program to Stop
+#### `!` - Force Program to Stop <a name="!"></a>
 
 Force AIBO to stop performing program, and cancel playback immediately also. Leaves AIBO in an unknown posture.
 
-#### `!!` - Normal Program Stop
+#### `!!` - Normal Program Stop <a name="!!"></a>
 
 Make AIBO to stop performing program. Same as `EXIT` command. Any skit being played will continue to run until finished.
 
