@@ -132,5 +132,113 @@ Force AIBO to stop performing program, and cancel playback immediately also. Lea
 
 Make AIBO to stop performing program. Same as `EXIT` command. Any skit being played will continue to run until finished.
 
-### Action/Skit Commands
+### _Action/Skit Commands_
+
+|       Command      |                                            Action                                           |
+|:------------------:|:-------------------------------------------------------------------------------------------:|
+|        PLAY        | Perform skit/action (add to a queue)                                                        |
+|        WAIT        | Pause R-Code program (not skit playback).                                                   |
+|        STOP        | Empty skit/action queue, and stop autorepeating skits (such as tail wagging).               |
+|        QUIT        | Empty skit/action queue, and immediately stop skit playback.                                |
+
+#### `PLAY` - Perform skit/action
+
+Add a skit or action to the playback queue. You can dispatch several skits at once, and AIBO will perform them sequentially in turn. The R-Code program continues to run while the skit is being performed. If you want to pause the program until the skit finishes, see the WAIT command.
+
+Usage:
+   `PLAY:ACTION:skitname[:optional parameters]`
+
+Note some builtin actions require parameters:
+
+* Walk/kick/touch actions need an angle and distance (in millimeters).
+* Turn actions need an angle.
+* Head movement actions need horizontal (left/right) and vertical angles (up/down).
+* Search/Track actions need a target, which must be PINK_BALL.
+
+Angles are in degrees. Negative angles mean right. Positive angles means left.
+
+* `0` is straight-ahead. 
+* `90` means left.
+* `-90` means right.   
+* `-180` is backwards.
+
+Examples:
+```
+// Perform the beethoven5 skit (present in DogsLife)
+PLAY:ACTION:beethoven5
+WAIT // wait for skit to finish
+  
+PLAY:ACTION:STAND         // Stand up (if not already doing so)
+WAIT
+  
+PLAY:ACTION:WALK:0:500    // Walk 500mm forwards
+WAIT
+  
+PLAY:ACTION:KICK:45:200   // Kick something 200mm away at 45 degrees
+WAIT
+  
+PLAY:ACTION:TOUCH:45:200  // Touch something 200mm away at 45 degrees
+WAIT
+  
+PLAY:ACTION:TURN:360      // Turn in place completely around.
+WAIT
+  
+PLAY:ACTION:MOVE_HEAD:-45:-20 // Look right and down
+WAIT
+  
+PLAY:ACTION:SEARCH:PINK_BALL  // Search for the ball
+WAIT
+```
+
+#### `WAIT` - Pause Program 
+
+Pause R-Code program temporarily from doing anything else.
+
+Usage:
+```
+   WAIT              Pause until playback queue empty.  Queued skits continue.
+                     Does nothing if nothing queued or being performed.
+   WAIT:<number>     Wait number of milliseconds (1 to 30000).
+   WAIT:<part>       R-Code 1.2 and above.   Wait until given part of AIBO idle.
+```
+The time/number parameter has a resolution of 32 milliseconds, e.g,
+
+* Values `1` to `32` equal 32
+* Values `33` to `64` equal 64
+
+The part parameter can be one of the following
+```
+   MOTION_ALL      All motions
+   MOTION_HEAD     Head motion
+   MOTION_LEG      Leg motion
+   MOTION_TAIL     Tail motion
+   MOTION_MOUTH    Chin motion
+   MOTION_EAR      Ear motion
+   SOUND_ALL       All sounds
+   LED_ALL         All lights
+   LED_FACE        Face (eye) lights
+   LED_MODE        Mode lights
+   LED_TAIL        Tail lights
+```
+Examples:
+```
+WAIT:2000   // Pause R-Code for two seconds.
+  
+PLAY:ACTION:STAND
+WAIT        // Pause R-Code until STAND action finished.
+```
+
+#### `STOP` - Empty Playback Queue
+Empty the skit/action playback queue, and stop autorepeating skits once last iteration finishes.
+
+Example:
+```
+PLAY:ACTION:PALONE.AUTO.TAILH // Wag tail horizontally...
+WAIT:2000                     // ...for two seconds
+STOP
+```
+
+#### `QUIT` - Empty Playback Queue, and Stop Playback Immediately
+
+Empty the skit/action playback queue, and all playback immediately.   Can leave AIBO in an unknown posture, forcing a stretch to reset things.   Not recommended for normal use.
 
