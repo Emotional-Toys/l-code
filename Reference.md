@@ -695,3 +695,111 @@ RET:1
 
 ### _Variable Declare and Assign_
 
+|       Command       |                         Action                        |
+|:-------------------:|:-----------------------------------------------------:|
+|        GLOBAL       | Declare global variable                               |
+|        LOCAL        | Declare local variable                                |
+|         LET         | Assign variable a value                               |
+|         SET         | Assign variable (plus system functions)               |
+|         CLR         | Clear sensor variable                                 |
+|        VSAVE        | Save variable value to memory stick                   |
+|        VLOAD        | Load variable value from memory stick                 |
+
+#### `GLOBAL` - Declare Global Variable
+Define a global variable visible to entire program.  Not generally needed, since AIBO makes all unknown new variables global by default. Can be used to optionally assign a value.
+
+Usage:
+   `GLOBAL:<variable>[:<value>]`
+
+Example:
+```
+GLOBAL:somevar               // Declare variable, defaults to zero.
+GLOBAL:anothervar:123        // Declare another, defaulted to 123.
+```
+
+#### `LOCAL` - Declare Local Variable
+Define a local variable visible in current scope only. Scope means something like a subroutine, or loop, e.g., `WHILE`/`WEND`.
+
+Example:
+```
+LOCAL:somevar               // Declare variable, defaults to zero.
+LOCAL:anothervar:123        // Declare another, defaulted to 123.
+```
+
+#### `LET` - Assign Variable a Value
+Specify value variable to be equal to.
+
+Usage:
+   `LET:<variable>:<value>`
+
+Example:
+```
+LET:somevar:123       // Assign user variable
+```
+
+#### `SET` - Assign Variable (plus system functions)
+Specify value variable to be equal to. Also can clear sensor variables. Generally you can safely use `SET` for all assignments as there are only special reasons to use `LET`.
+
+Usage:
+   `SET:<variable>:<value>`
+
+Once the system sets the following variables, the only way to clear them is using `SET`.
+```
+   Head_ON
+   Head_OFF
+   Head_Hit       
+   Head_Pat       
+   Head_LONG      
+   Back_ON        
+   Back_OFF       
+   Back_LONG      
+   Jaw_ON         
+   Jaw_OFF        
+   Jaw_LONG       
+   RFLeg_ON       
+   RFLeg_OFF      
+   LFLeg_ON       
+   LFLeg_OFF      
+   RRLeg_ON       
+   RRLeg_OFF      
+   LRLeg_ON       
+   LRLeg_OFF      
+```
+Examples:
+```
+SET:somevar:123       // Assign user variable
+SET:Head_ON:0         // Clear Head_ON sensor
+```
+
+#### `CLR:SENSORS` - Clear Sensor Variables
+Sets to zero all persistent sensor variables for those which store previous values.
+
+Usage:
+   `CLR:SENSORS`
+
+
+#### `VSAVE` - Save Variable
+Save variable value to memory stick. The variable name is used as a filename with a maximum name length of 8 characters. Use `VLOAD` to read it back. Good for storing learned information.
+
+Usage:
+   `VSAVE:<variable>`
+
+Example:
+```
+VSAVE:somevar   // Save value to /OPEN-R/APP/PC/AMS/SOMEVAR.SAV
+```
+
+#### `VLOAD` - Load Variable
+Load value from memory stick. The variable name is used as a filename with a maximum name length of 8 characters.
+
+Usage:
+   `VLOAD:<variable>`
+
+Example:
+```
+VLOAD:somevar   // Load value stored in file /OPEN-R/APP/PC/AMS/SOMEVAR.SAV
+```
+
+### _Stack Commands_
+The following commands operate on the stack. R-Code manages the stack in the same manner as Forth: The last item placed on the stack is the first one removed.
+
