@@ -4,11 +4,14 @@ The code reference for R-Code, version 1.2. It might be also valid for version 3
 
 ### Index
 
-Here.
+1. [Text Formatting Requirements](#text)
+2. [Comments](#comments)
+3. [Jump Labels](#jump)
+3. [Numbers](#numbers)
 
 ## Descriptives
 
-### _Text Formatting Requirements_
+### _Text Formatting Requirements_ <a name="text"></a>
 
 * Lines must be less than 127 characters (comments included).
 * Only alphanumeric & underscore characters `A-Z`, `0-9`, and `_`  should be used in variable names.
@@ -22,7 +25,7 @@ SET:my_var_name:123
 PLAY:ACTION:STAND
 ```
 
-### _Comments_
+### _Comments_ <a name="comments"></a>
 
 You can place comments - text which the interpreter skips - by using double-slashes `//`.
 
@@ -31,7 +34,7 @@ Example:
 PLAY:ACTION:STAND // Make AIBO stand up
 ```
 
-### _Jump Labels_
+### _Jump Labels_ <a name="jump"></a>
 
 Lines starting with colon characters define jump labels. Can be used with `IF`, `GO`, and `CALL` commands, among others. 
 
@@ -46,7 +49,7 @@ WAIT
 GO:JumpHere
 ```
 
-### _Numbers_
+### _Numbers_ <a name="numbers"></a>
 
 * Decimal numbers start with `0` to `9` or plus/minus signs `+`, `-`.
 * Hexadecimal numbers (base 16) must start with `0x` or `0X` and may contain digits `0` to `9`, and `A` to `F`.
