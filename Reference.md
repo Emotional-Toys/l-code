@@ -24,7 +24,7 @@ The code reference for R-Code, version 1.2. It might be also valid for version 3
 
 | Commands      |       |        |      |      |       |       |        |     |       |      |      |     |
 |---------------|-------|--------|------|------|-------|-------|--------|-----|-------|------|------|-----|
-| EDIT          | END   | RUN    | EXIT | HALT | INIT  | !     |        |     |       |      |      |     |
+| [EDIT](#edit) | END   | RUN    | EXIT | HALT | INIT  | !     |        |     |       |      |      |     |
 | PLAY          | WAIT  | STOP   | QUIT |      |       |       |        |     |       |      |      |     |
 | PRINT         | VDUMP |        |      |      |       |       |        |     |       |      |      |     |
 | GO            | IF    | SWITCH | CSET | CASE | FOR   | WHILE | REPEAT | DO  | BREAK |      |      |     |
@@ -103,7 +103,7 @@ SET:binnum:0b01010101   // Binary number (85 in decimal)
 |    !    | Force program to stop.                     |
 |    !!   | Stop program.                              |
 
-#### `EDIT` - Load New Program
+#### `EDIT` - Load New Program <a name="edit"></a>
 
 Place AIBO into program load mode. Any previously loaded program is erased. Normally used for transferring programs from your PC to AIBO, such as with Aibnet. Stop program load with END command.
 
