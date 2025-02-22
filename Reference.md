@@ -242,3 +242,360 @@ STOP
 
 Empty the skit/action playback queue, and all playback immediately.   Can leave AIBO in an unknown posture, forcing a stretch to reset things.   Not recommended for normal use.
 
+### _Debug Commands_
+
+|       Command       |                                 Action                                |
+|:-------------------:|:---------------------------------------------------------------------:|
+|        PRINT        | Display a message, or contents of one or more variables               |
+|        VDUMP        | Show value of variable                                                |
+
+#### `PRINT` - Display a Message
+Display a message, and optionally the value of one or more variables. Useful only if connected over WLAN.
+
+Usage:
+   `PRINT:"message"[:one or more variables]`
+
+Message must be enclosed in quotes.   You also must use either `%d` or `%x` within the message to position displayed variable values. `%d` for decimal, `%x` for hexadecimal.
+
+Example:
+```
+// Show current position of head...
+PRINT:"Head_Tilt=%d   Head_Pan=%d":Head_Tilt:Head_Pan
+```
+Output appears as follows:
+```
+Head_Tilt=-45   Head_Pan=-20
+```
+
+#### `VDUMP` - Show value of variable
+Second method for showing variable value. Outputs variable name and its value to the WLAN console.
+
+Usage:
+   `VDUMP:variable_name`
+
+Example:
+```
+// Show current position of head...
+VDUMP:Head_Tilt
+```
+
+Output appears as follows:
+```
+Head_Tilt = -45
+```
+
+### _Jump/Loop Commands_
+
+|      Command     |                                           Action                                           |
+|:----------------:|:------------------------------------------------------------------------------------------:|
+|        GO        |  Jump to label                                                                             |
+|        IF        |  Conditional test                                                                          |
+|      SWITCH      | Assign Context for CASE statement                                                          |
+|       CSET       | Conditional Test and Context Assign for CASE statement                                     |
+|       CASE       | Perform parameter if Context matches value                                                 |
+|        FOR       | Start FOR loop.   Repeat commands inside FOR/NEXT specified number of times.               |
+|       NEXT       | End FOR loop                                                                               |
+|       WHILE      | Start WHILE loop.   Repeat commands inside WHILE/WEND while test true.                     |
+|       WEND       | End WHILE loop                                                                             |
+|      REPEAT      | Start REPEAT loop.   Repeat commands inside REPEAT/UNTIL until test true.                  |
+|       UNTIL      | End REPEAT loop                                                                            |
+|        DO        | Start DO loop.   Repeat commands inside DO/LOOP until test true.                           |
+|       LOOP       | End DO loop                                                                                |
+|       BREAK      | Break out of loop                                                                          |
+
+GO - Jump to label
+The R-Code program moves to jump label.
+
+Usage:
+   GO:label
+
+Example:
+
+// Make AIBO sit & stand repeatedly forever...
+:JumpHere
+PLAY:ACTION:SIT
+WAIT
+PLAY:ACTION:STAND
+WAIT
+GO:JumpHere
+
+
+IF - Conditional test
+Compare two numbers or variables, and perform parameter accordingly.   There are several different flavors of the IF command...
+
+Version 1
+   IF:<value1>:<op>:<value2>:THEN
+      // command block (performed only if comparison succeeds)
+   ENDIF
+
+Version 2
+   IF:<value1>:<op>:<value2>:THEN
+     // then block (performed if comparison succeeds)
+   ELSE
+     // else block (performed if comparison fails)
+   ENDIF
+
+Version 3
+   IF:<value1>:<op>:<value2>:CALL:label[:argument-count]
+     If comparison succeeds, perform CALL command and jump to subroutine
+       at label with optional argument count (see CALL command for details).
+
+Version 4
+   IF:<value1>:<op>:<value2>:BREAK
+     If comparison succeeds, perform BREAK command and exit nearest loop.
+
+Version 5
+   IF:<value1>:<op>:<value2>:match-label
+     If comparison succeeds, jump to label "match-label".
+
+Version 6
+   IF:<value1>:<op>:<value2>:match-label:else-label
+     If comparison succeeds, jump to label "match-label".
+     If comparison fails, jump to label "else-label".
+
+Values:
+   The `<value>` fields can be either variables or numbers.
+
+Operators:
+   The <op> field can be one of the following:
+      `=`    Equals (compare succeeds if both values equal)
+      `==`   Equals (works same as above)
+      `<>`   Not Equal
+      `!=`   Not Equal (works same as above).
+      `<`    Less than
+      `<=`   Less than, or Equal
+      `>`    Greater than
+      `>=`   Greater than, or Equal
+      `&`    Succeed if bitwise AND of values is non-zero
+      `|`    Succeed if either value non-zero (bitwise OR of values)
+      `^`    Succeed if bitwise XOR of values is non-zero
+      `&&`   Succeed if both values non-zero
+      `||`   Succeed if either value non-zero
+
+Examples:
+```
+:JumpHere
+IF:Back_ON:>:0:THEN
+  SET:Back_ON:0
+  PRINT:"Back Sensor Pressed"
+ENDIF
+  
+IF:Jaw_ON:==:0:JumpHere
+SET:Jaw_ON:0
+PRINT:"Jaw Sensor Pressed"
+GO:JumpHere
+```
+
+#### `SWITCH` - Assign Context for `CASE` statement
+Set context for multiple branching with `CASE` statement. A useful shorthand for comparing a value against multiple numbers. Should be immediately followed by one or more `CASE` statements.
+
+Usage:
+   `SWITCH:<value1>`
+
+Example:
+```
+SWITCH:some_var
+  CASE:1:PRINT:"some_var = 1"
+  CASE:2:PRINT:"some_var = 2"
+  CASE:3:PRINT:"some_var = 3"
+  CASE:4:PRINT:"some_var = 4"
+  CASE:5:SET:some_var:55
+  CASE:6:GO:JumpHere
+  CASE:ELSE:PRINT:"some_var = Unknown"
+```
+
+#### `CSET` - Conditional test and Context Assign for `CASE` statement
+Perform comparison and set context if successful.    On a successful match, subsequent CSET's are skipped.
+
+Usage:
+   `CSET:<value1>:<op>:<value2>:<context-value>`
+
+Example:
+```
+CSET:some_var:<:100:1
+CSET:some_var:<:200:2
+CSET:some_var:<:300:3
+CSET:some_var:<:400:4
+CSET:some_var:<:500:5
+CSET:some_var:<:500:6
+CASE:1:PRINT:"some_var < 100"
+CASE:2:PRINT:"some_var < 200"
+CASE:3:PRINT:"some_var < 300"
+CASE:4:PRINT:"some_var < 400"
+CASE:5:SET:some_var:55
+CASE:6:GO:JumpHere
+```
+
+#### `CASE` - Perform parameter if Context matches value
+Compare context to parameter value. If equal, perform command.  Alternately, can use `ELSE` instead of value. In which case, command is performed if all previous `CASE` statements failed.
+
+Version 1
+   `CASE:<value>:<command>`
+
+Version 2
+   `CASE:ELSE:<command>`
+
+Example:
+```
+SWITCH:some_var
+  CASE:1:PRINT:"some_var = 1"
+  CASE:2:PRINT:"some_var = 2"
+  CASE:3:PRINT:"some_var = 3"
+  CASE:4:PRINT:"some_var = 4"
+  CASE:5:SET:some_var:55
+  CASE:6:GO:JumpHere
+  CASE:ELSE:PRINT:"some_var = Unknown"
+```
+
+#### `FOR` / `NEXT` - Repeat nested commands
+Repeat nested commands specified number of times. Variable gets set to `<from-value>`, and is then incremented by `1` on each pass until matches `<to-value>`.  The optional `<step-value>` can change the increment, or even make it negative for counting backwards.
+
+Version 1
+```
+   FOR:<variable>:<from-value>:<to-value>
+     // nested commands
+   NEXT
+```
+Version 2
+```
+   FOR:<variable>:<from-value>:<to-value>:<step-value>
+     // nested commands
+   NEXT
+```
+Examples:
+```
+// Make AIBO sit & stand five times...
+FOR:some_var:1:5
+  PLAY:ACTION:SIT
+  WAIT
+  PLAY:ACTION:STAND
+  WAIT
+NEXT
+  
+// Count backwards and display 50,40,30,20,10,0
+FOR:some_var:50:0:-10
+  PRINT:"some_var = %d":some_var
+NEXT
+```
+
+#### `WHILE` / `WEND` - Repeat nested commands while test true
+Repeat nested commands while comparison succeeds.  Note: If comparison fails on first attempt, nested commands are not performed at all! Comparison occurs before nested commands performed.
+
+Usage:
+```
+   WHILE:<value1>:<op>:<value2>
+     // nested commands
+   WEND
+```
+See `IF` command for list of available operators (the `<op>` field).
+
+Example:
+```
+// Make AIBO sit & stand while back not pressed...
+WHILE:Back_ON:==:0
+  PLAY:ACTION:SIT
+  WAIT
+  PLAY:ACTION:STAND
+  WAIT
+WEND
+```
+
+#### `REPEAT` / `UNTIL` - Repeat nested commands until test true
+Repeat nested commands until comparison succeeds. Nested commands always performed at least once. Comparison occurs after nested commands performed.
+
+Usage:
+```
+   REPEAT
+     // nested commands
+   UNTIL:<value1>:<op>:<value2>
+```
+See `IF` command for list of available operators (the `<op>` field).
+
+Example:
+```
+// Make AIBO sit & stand until back pressed...
+REPEAT
+  PLAY:ACTION:SIT
+  WAIT
+  PLAY:ACTION:STAND
+  WAIT
+UNTIL:Back_ON:>:0
+```
+
+#### `DO` / `LOOP` - Repeat nested commands while or until test true
+Repeat nested commands. Optionally supports comparing values both before and after nested commands performed.
+
+Usage:
+```
+   DO[:WHILE|UNTIL:<value1>:<op>:<value2>]
+     // nested commands
+   LOOP[:WHILE|UNTIL:<value1>:<op>:<value2>]
+```
+See `IF` command for list of available operators (the `<op>` field).
+
+Examples:
+```
+// Make AIBO sit & stand forever...
+DO
+  PLAY:ACTION:SIT
+  WAIT
+  PLAY:ACTION:STAND
+  WAIT
+LOOP
+  
+// Make AIBO sit & stand while back not pressed...
+DO:WHILE:Back_ON:==:0
+  PLAY:ACTION:SIT
+  WAIT
+  PLAY:ACTION:STAND
+  WAIT
+LOOP
+  
+// Make AIBO sit & stand while back not pressed...
+DO:UNTIL:Back_ON:>:0
+  PLAY:ACTION:SIT
+  WAIT
+  PLAY:ACTION:STAND
+  WAIT
+LOOP
+  
+// Make AIBO sit & stand while neither jaw or back not pressed...
+DO:WHILE:Jaw_ON:==:0
+  PLAY:ACTION:SIT
+  WAIT
+  PLAY:ACTION:STAND
+  WAIT
+LOOP:UNTIL:Back_ON:>:0
+```
+
+#### `BREAK` - Break out of loop
+Break out of loops.   Convenient for exiting a loop early, perhaps if a sensor detects something unusual.  Works with `FOR`/`NEXT`, `WHILE`/`WEND`, `REPEAT`/`UNTIL`, or `DO`/`LOOP`.
+
+You can break out of multiple nested loops with a single `BREAK` by giving the optional level parameter.
+
+Usage:
+   `BREAK[:<level>]`
+
+Examples:
+```
+// Make AIBO sit & stand until back pressed...
+DO
+  PLAY:ACTION:SIT
+  WAIT
+  PLAY:ACTION:STAND
+  WAIT
+  IF:Back_ON:>:0:BREAK
+LOOP
+  
+FOR:some_var:1:10
+  FOR:another_var:1:10
+    IF:some_var:>5:THEN
+      BREAK:2 // exit both FOR loops
+    ENDIF
+    PRINT:"%d %d":some_var:another_var
+  NEXT
+NEXT
+```
+
+### _Subroutine Commands_
+
