@@ -22,14 +22,16 @@ The code reference for R-Code, version 1.2. It might be also valid for version 3
 
 ### Index of Commands
 
-| EDIT   | END   | RUN    | EXIT | HALT | INIT  | !     |        |     |       |      |      |     |
-| PLAY   | WAIT  | STOP   | QUIT |      |       |       |        |     |       |      |      |     |
-| PRINT  | VDUMP |        |      |      |       |       |        |     |       |      |      |     |
-| GO     | IF    | SWITCH | CSET | CASE | FOR   | WHILE | REPEAT | DO  | BREAK |      |      |     |
-| CALL   | ARG   | RETURN | RET  |      |       |       |        |     |       |      |      |     |
-| GLOBAL | LOCAL | LET    | SET  | CLR  | VSAVE | VLOAD |        |     |       |      |      |     |
-| PUSH   | POP   | DUP    | JT   | JF   |       |       |        |     |       |      |      |     |
-| ADD    | SUB   | MUL    | DIV  | MOD  | AND   | IOR   | XOR    | NOT | LAND  | LIOR | LNOT | RND |
+| Command Index |       |        |      |      |       |       |        |     |       |      |      |     |
+|---------------|-------|--------|------|------|-------|-------|--------|-----|-------|------|------|-----|
+| EDIT          | END   | RUN    | EXIT | HALT | INIT  | !     |        |     |       |      |      |     |
+| PLAY          | WAIT  | STOP   | QUIT |      |       |       |        |     |       |      |      |     |
+| PRINT         | VDUMP |        |      |      |       |       |        |     |       |      |      |     |
+| GO            | IF    | SWITCH | CSET | CASE | FOR   | WHILE | REPEAT | DO  | BREAK |      |      |     |
+| CALL          | ARG   | RETURN | RET  |      |       |       |        |     |       |      |      |     |
+| GLOBAL        | LOCAL | LET    | SET  | CLR  | VSAVE | VLOAD |        |     |       |      |      |     |
+| PUSH          | POP   | DUP    | JT   | JF   |       |       |        |     |       |      |      |     |
+| ADD           | SUB   | MUL    | DIV  | MOD  | AND   | IOR   | XOR    | NOT | LAND  | LIOR | LNOT | RND |
 
 ## Features
 
