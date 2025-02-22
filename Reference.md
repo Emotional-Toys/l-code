@@ -22,7 +22,7 @@ The code reference for R-Code, version 1.2. It might be also valid for version 3
 
 ### Index of Commands
 
-| Command Index                                                                                           |
+| Command Reference guide        |      |      |       |       |        |     |       |      |      |     |
 |---------------|-------|--------|------|------|-------|-------|--------|-----|-------|------|------|-----|
 | EDIT          | END   | RUN    | EXIT | HALT | INIT  | !     |        |     |       |      |      |     |
 | PLAY          | WAIT  | STOP   | QUIT |      |       |       |        |     |       |      |      |     |
