@@ -4,7 +4,7 @@ A simplified interpreted scripting language.
 
 ## About R-Code
 
-The R-CODE SDK offers an environment to execute a simplified interpreted scripting language that can be used to program dot and other kinds of personal robots. You can use sensor data, variables, R-CODE's built-in commands, and more. You can customize dot to respond in customized ways or create animations with only a few lines of code. R-CODE is an interpreted language, so it is not recommended for complex calculations. although it does natively using its stack. The R-CODE program can be executed by copying it to a dot programming memory wafer with the R-CODE system runtime files. You can upload an R-CODE script to your dot by using a Bluetooth.
+The R-CODE SDK offers an environment to execute a simplified interpreted scripting language that can be used to program dot and other kinds of personal robots. You can use sensor data, variables, R-CODE's built-in commands, and more. You can customize dot to respond in customized ways or create animations with only a few lines of code. R-CODE is an interpreted language, so it is not recommended for complex calculations. although it does natively using its stack. The R-CODE program can be executed by copying it to a dot programming memory wafer with the R-CODE system runtime files. You can upload an R-CODE script to your dot by using a Bluetooth. This is the operating construct for our [letty](https://github.com/Emotional-Toys/animals-letty) robot.
 
 The code reference guide for version 0.1 is [here](/Reference.md).
 

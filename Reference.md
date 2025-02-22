@@ -1,4 +1,4 @@
-## R-Code v0.1 Reference Guide
+## R-Code version 0.1 Reference Guide
 
 The complete set of features and commands are listed on this page.
 
