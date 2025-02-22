@@ -10,6 +10,8 @@ R-CODE is suitable for hobby users, because it is very easy to create robot prog
 
 The R-CODE script program can be executed by copying it to an AIBO Programming Memory Stick with the R-CODE system (runtime) files. You can upload an R-CODE script to AIBO and debug it by using a wireless LAN, where possible.
 
+The code reference guide for version 1.2 is [here](/Reference.md).
+
 ### An example program
 
 ```
