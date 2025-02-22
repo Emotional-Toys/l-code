@@ -1,6 +1,6 @@
-## R-Code v1.2 Reference Guide
+## R-Code v0.1 Reference Guide
 
-The code reference for R-Code, version 1.2. It might be also valid for version 3 (ERS-7).
+The complete set of features and commands are listed on this page.
 
 ### Index of Features
 
