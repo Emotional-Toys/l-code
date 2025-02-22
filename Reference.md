@@ -879,15 +879,15 @@ The following commands perform arithmetic on variables and value parameters.
 | `SUB:<var>:<value>`             | Subtract value from variable.    variable = variable / value                               |
 | `MUL:<var>:<value>`             | Multiply variable by value.    variable = variable * value                                 |
 | `DIV:<var>:<value>`             | Divide variable by value.    variable = variable / value                                   |
-| MOD:<var>:<value>               | Remainder of dividing variable by value.    variable = variable % value                    |
-| AND:<var>:<value>               | Bitwise AND variable with value.   variable = variable & value                             |
-| IOR:<var>:<value>               | Bitwise OR variable with value.   variable = variable \| value                             |
-| XOR:<var>:<value>               | Bitwise XOR variable with value.   variable = variable ^ value                             |
-| NOT:<var>                       | Bitwise invert variable.   variable = ~variable                                            |
-| LAND:<var>:<value>              | Logical AND.   If both variable and value non zero, set to 1.   Otherwise 0.               |
-| LIOR:<var>:<value>              | Logical OR.   If either variable or value non zero, set to 1.   Otherwise 0.               |
-| LNOT:<var>                      | Logical NOT.  If variable zero, set to 1.   Otherwise 0.                                   |
-| RND:<var>:<from>:<to>           | Set variable to random number between <from> and <to>.                                     |
+| `MOD:<var>:<value>`             | Remainder of dividing variable by value.    variable = variable % value                    |
+| `AND:<var>:<value>`             | Bitwise AND variable with value.   variable = variable & value                             |
+| `IOR:<var>:<value>`             | Bitwise OR variable with value.   variable = variable \| value                             |
+| `XOR:<var>:<value>`             | Bitwise XOR variable with value.   variable = variable ^ value                             |
+| `NOT:<var>`                     | Bitwise invert variable.   variable = ~variable                                            |
+| `LAND:<var>:<value>`            | Logical AND.   If both variable and value non zero, set to 1.   Otherwise 0.               |
+| `LIOR:<var>:<value>`            | Logical OR.   If either variable or value non zero, set to 1.   Otherwise 0.               |
+| `LNOT:<var>`                    | Logical NOT.  If variable zero, set to 1.   Otherwise 0.                                   |
+| `RND:<var>:<from>:<to>`         | Set variable to random number between <from> and <to>.                                     |
 
 Examples:
 ```
