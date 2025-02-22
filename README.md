@@ -1,16 +1,12 @@
 # r-code
 
-Simplified interpreted scripting language that can be used to program AIBO.
+A simplified interpreted scripting language.
 
 ## About R-Code
 
-The R-CODE SDK offers an environment to execute a simplified interpreted scripting language that can be used to program AIBO. You can use sensor data, variables, R-CODE's built-in commands, and more to program AIBO. You can program AIBO to walk or dance with only a few lines of code.
+The R-CODE SDK offers an environment to execute a simplified interpreted scripting language that can be used to program dot and other kinds of personal robots. You can use sensor data, variables, R-CODE's built-in commands, and more. You can customize dot to respond in customized ways or create animations with only a few lines of code. R-CODE is an interpreted language, so it is not recommended for complex calculations. although it does natively using its stack. The R-CODE program can be executed by copying it to a dot programming memory wafer with the R-CODE system runtime files. You can upload an R-CODE script to your dot by using a Bluetooth.
 
-R-CODE is suitable for hobby users, because it is very easy to create robot programs. With R-CODE, you can use 600 (or more) built-in motions that are included in commercial AIBOware. R-CODE is an interpreted language, so it is not recommended for complex calculations, but it is easy to modify the script program and re-run.
-
-The R-CODE script program can be executed by copying it to an AIBO Programming Memory Stick with the R-CODE system (runtime) files. You can upload an R-CODE script to AIBO and debug it by using a wireless LAN, where possible.
-
-The code reference guide for version 1.2 is [here](/Reference.md).
+The code reference guide for version 0.1 is [here](/Reference.md).
 
 ### An example program
 
