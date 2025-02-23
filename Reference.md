@@ -1,4 +1,4 @@
-## R-Code version 0.1 Reference Guide
+## L-Code version 0.1 Reference Guide
 
 The complete set of features and commands are listed on this page.
 
@@ -39,9 +39,9 @@ The complete set of features and commands are listed on this page.
 
 * Lines must be less than 127 characters (comments included).
 * Only alphanumeric & underscore characters `A-Z`, `0-9`, and `_`  should be used in variable names.
-* All upper-case words are reserved for R-Code. Use lower-case, or mixed-case for variable names.
+* All upper-case words are reserved for L-Code. Use lower-case, or mixed-case for variable names.
 * Spaces & tab can be used to indent commands for readability.
-* R-Code commands & parameters must be separated by colon characters `:`.
+* L-Code commands & parameters must be separated by colon characters `:`.
 
 Example:
 ```
@@ -55,7 +55,7 @@ Place comments - text which the interpreter skips - by using double-slashes `//`
 
 Example:
 ```
-PLAY:ACTION:STAND // Make AIBO stand up
+PLAY:ACTION:STAND // Make LETTY stand up
 ```
 
 ### _Jump Labels_ <a name="jump"></a>
@@ -64,7 +64,7 @@ Lines starting with colon characters define jump labels. Can be used with `IF`, 
 
 Example:
 ```
-// Make AIBO sit & stand repeatedly forever...
+// Make LETTY sit & stand repeatedly forever...
 :JumpHere
 PLAY:ACTION:SIT
 WAIT
@@ -96,21 +96,21 @@ SET:binnum:0b01010101   // Binary number (85 in decimal)
 |:-------:|:------------------------------------------:|
 |   EDIT  | Load new program                           |
 |   END   | End loading program                        |
-|   RUN   | Begin program (make AIBO perform program). |
+|   RUN   | Begin program (make LETTY perform program) |
 |   EXIT  | Stop program                               |
-|   HALT  | Shutdown AIBO (power off)                  |
-|   INIT  | Restart AIBO (reinitialize)                |
+|   HALT  | Shutdown LETTY (power off)                 |
+|   INIT  | Restart LETTY (reinitialize)               |
 |    !    | Force program to stop.                     |
 |    !!   | Stop program.                              |
 
 #### `EDIT` - Load New Program <a name="edit"></a>
 
-Place AIBO into program load mode. Any previously loaded program is erased. Normally used for transferring programs from your PC to AIBO, such as with Aibnet. Stop program load with END command.
+Place LETTY into program load mode. Any previously loaded program is erased. Normally used for transferring programs from your PC to LETTY, such as with Aibnet. Stop program load with END command.
 
 Example:
 ```
 EDIT
-// Make AIBO sit & stand repeatedly forever...
+// Make LETTY sit & stand repeatedly forever...
 :JumpHere
 PLAY:ACTION:SIT
 WAIT
@@ -126,19 +126,19 @@ Use only in conjunction with `EDIT`.   See above.
 
 #### `RUN` - Begin Program <a name="run"></a>
 
-Make AIBO start performing program loaded with `EDIT`/`END` commands.
+Make LETTY start performing program loaded with `EDIT`/`END` commands.
 
 #### `EXIT` - Stop Program <a name="exit"></a>
 
-Make AIBO stop performing program. Can be used within a loaded _running_ program to stop itself. Any skit being played will continue to run until finished.
+Make LETTY stop performing program. Can be used within a loaded _running_ program to stop itself. Any skit being played will continue to run until finished.
 
-#### `HALT` - Shutdown AIBO <a name="halt"></a>
+#### `HALT` - Shutdown LETTY <a name="halt"></a>
 
-Make AIBO stop performing program and shutdown. Can be used within a loaded _running_ program to make AIBO turn itself off - for example if the battery gets low.
+Make LETTY stop performing program and shutdown. Can be used within a loaded _running_ program to make LETTY turn itself off - for example if the battery gets low.
 
-#### `INIT` - Restart/Reinitialize AIBO <a name="init"></a>
+#### `INIT` - Restart/Reinitialize LETTY <a name="init"></a>
 
-Restart the R-Code parser. 
+Restart the L-Code parser. 
 
 Usage:
    `INIT:<init-level>`
@@ -148,29 +148,29 @@ Only use values `2` or `9`. All others are reserved or undefined.
 Examples:
 ```
 INIT:2   // Reset dictionary & variable tables.
-INIT:9   // Shutdown & reboot AIBO
+INIT:9   // Shutdown & reboot LETTY
 ```
 
 #### `!` - Force Program to Stop <a name="!"></a>
 
-Force AIBO to stop performing program, and cancel playback immediately also. Leaves AIBO in an unknown posture.
+Force LETTY to stop performing program, and cancel playback immediately also. Leaves LETTY in an unknown posture.
 
 #### `!!` - Normal Program Stop <a name="!!"></a>
 
-Make AIBO to stop performing program. Same as `EXIT` command. Any skit being played will continue to run until finished.
+Make LETTY to stop performing program. Same as `EXIT` command. Any skit being played will continue to run until finished.
 
 ### _Action/Skit Commands_
 
 |       Command      |                                            Action                                           |
 |:------------------:|:-------------------------------------------------------------------------------------------:|
 |        PLAY        | Perform skit/action (add to a queue)                                                        |
-|        WAIT        | Pause R-Code program (not skit playback).                                                   |
+|        WAIT        | Pause L-Code program (not skit playback).                                                   |
 |        STOP        | Empty skit/action queue, and stop autorepeating skits (such as tail wagging).               |
 |        QUIT        | Empty skit/action queue, and immediately stop skit playback.                                |
 
 #### `PLAY` - Perform skit/action <a name="play"></a>
 
-Add a skit or action to the playback queue. You can dispatch several skits at once, and AIBO will perform them sequentially in turn. The R-Code program continues to run while the skit is being performed. If you want to pause the program until the skit finishes, see the WAIT command.
+Add a skit or action to the playback queue. You can dispatch several skits at once, and LETTY will perform them sequentially in turn. The L-Code program continues to run while the skit is being performed. If you want to pause the program until the skit finishes, see the WAIT command.
 
 Usage:
    `PLAY:ACTION:skitname[:optional parameters]`
@@ -219,14 +219,14 @@ WAIT
 
 #### `WAIT` - Pause Program <a name="wait"></a>
 
-Pause R-Code program temporarily from doing anything else.
+Pause L-Code program temporarily from doing anything else.
 
 Usage:
 ```
    WAIT              Pause until playback queue empty.  Queued skits continue.
                      Does nothing if nothing queued or being performed.
    WAIT:<number>     Wait number of milliseconds (1 to 30000).
-   WAIT:<part>       R-Code 1.2 and above.   Wait until given part of AIBO idle.
+   WAIT:<part>       L-Code 1.2 and above.   Wait until given part of LETTY idle.
 ```
 The time/number parameter has a resolution of 32 milliseconds, e.g,
 
@@ -249,10 +249,10 @@ The part parameter can be one of the following
 ```
 Examples:
 ```
-WAIT:2000   // Pause R-Code for two seconds.
+WAIT:2000   // Pause L-Code for two seconds.
   
 PLAY:ACTION:STAND
-WAIT        // Pause R-Code until STAND action finished.
+WAIT        // Pause L-Code until STAND action finished.
 ```
 
 #### `STOP` - Empty Playback Queue <a name="stop"></a>
@@ -267,7 +267,7 @@ STOP
 
 #### `QUIT` - Empty Playback Queue, and Stop Playback Immediately <a name="quit"></a>
 
-Empty the skit/action playback queue, and all playback immediately.   Can leave AIBO in an unknown posture, forcing a stretch to reset things.   Not recommended for normal use.
+Empty the skit/action playback queue, and all playback immediately. Can leave LETTY in an unknown posture, forcing a stretch to reset things. Not recommended for normal use.
 
 ### _Debug Commands_ <a name="debug"></a>
 
@@ -331,14 +331,14 @@ Head_Tilt = -45
 |       BREAK      | Break out of loop                                                                          |
 
 #### `GO` - Jump to label <a name="go"></a>
-The R-Code program moves to jump label.
+The L-Code program moves to jump label.
 
 Usage:
    `GO:label`
 
 Example:
 ```
-// Make AIBO sit & stand repeatedly forever...
+// Make LETTY sit & stand repeatedly forever...
 :JumpHere
 PLAY:ACTION:SIT
 WAIT
@@ -498,7 +498,7 @@ Version 2
 ```
 Examples:
 ```
-// Make AIBO sit & stand five times...
+// Make LETTY sit & stand five times...
 FOR:some_var:1:5
   PLAY:ACTION:SIT
   WAIT
@@ -525,7 +525,7 @@ See `IF` command for list of available operators (the `<op>` field).
 
 Example:
 ```
-// Make AIBO sit & stand while back not pressed...
+// Make LETTY sit & stand while back not pressed...
 WHILE:Back_ON:==:0
   PLAY:ACTION:SIT
   WAIT
@@ -547,7 +547,7 @@ See `IF` command for list of available operators (the `<op>` field).
 
 Example:
 ```
-// Make AIBO sit & stand until back pressed...
+// Make LETTY sit & stand until back pressed...
 REPEAT
   PLAY:ACTION:SIT
   WAIT
@@ -569,7 +569,7 @@ See `IF` command for list of available operators (the `<op>` field).
 
 Examples:
 ```
-// Make AIBO sit & stand forever...
+// Make LETTY sit & stand forever...
 DO
   PLAY:ACTION:SIT
   WAIT
@@ -577,7 +577,7 @@ DO
   WAIT
 LOOP
   
-// Make AIBO sit & stand while back not pressed...
+// Make LETTY sit & stand while back not pressed...
 DO:WHILE:Back_ON:==:0
   PLAY:ACTION:SIT
   WAIT
@@ -585,7 +585,7 @@ DO:WHILE:Back_ON:==:0
   WAIT
 LOOP
   
-// Make AIBO sit & stand while back not pressed...
+// Make LETTY sit & stand while back not pressed...
 DO:UNTIL:Back_ON:>:0
   PLAY:ACTION:SIT
   WAIT
@@ -593,7 +593,7 @@ DO:UNTIL:Back_ON:>:0
   WAIT
 LOOP
   
-// Make AIBO sit & stand while neither jaw or back not pressed...
+// Make LETTY sit & stand while neither jaw or back not pressed...
 DO:WHILE:Jaw_ON:==:0
   PLAY:ACTION:SIT
   WAIT
@@ -610,7 +610,7 @@ Usage:
 
 Examples:
 ```
-// Make AIBO sit & stand until back pressed...
+// Make LETTY sit & stand until back pressed...
 DO
   PLAY:ACTION:SIT
   WAIT
@@ -639,7 +639,7 @@ NEXT
 |   RET   | Return from subroutine (context version) |
 
 #### `CALL` - Call a Subroutine <a name="call"></a>
-The R-Code program moves to the given label, but remembers where it came from. Using `RET` or `RETURN` resumes at the old location. You can pass arguments to subroutines by `PUSH`ing them beforehand. Arguments allow reusing a subroutine in different places, without dedicating variables. See ARG command for details.
+The L-Code program moves to the given label, but remembers where it came from. Using `RET` or `RETURN` resumes at the old location. You can pass arguments to subroutines by `PUSH`ing them beforehand. Arguments allow reusing a subroutine in different places, without dedicating variables. See ARG command for details.
 
 Usage:
    `CALL:label[:argument-count]`
@@ -681,7 +681,7 @@ RET
 ```
 
 #### `RETURN` - Return from Subroutine (stack version) <a name="return"></a>
-Return to R-Code position following `CALL` command. If returning optional value, then use the `POP` command to retrieve result.
+Return to L-Code position following `CALL` command. If returning optional value, then use the `POP` command to retrieve result.
 
 Usage:
    `RETURN[:<value>]`
@@ -700,7 +700,7 @@ RETURN:123
 ```
 
 #### `RET` - Return from Subroutine (context version) <a name="ret"></a>
-Return to R-Code position following `CALL` command. Return value placed into Context variable, for use with `CASE` statement. If value not given, or zero is returned, original Context value on entry to subroutine is returned.
+Return to L-Code position following `CALL` command. Return value placed into Context variable, for use with `CASE` statement. If value not given, or zero is returned, original Context value on entry to subroutine is returned.
 
 Usage:
   `RET:<new-context-value>`
@@ -731,7 +731,7 @@ RET:1
 |        VLOAD        | Load variable value from memory stick                 |
 
 #### `GLOBAL` - Declare Global Variable <a name="global"></a>
-Define a global variable visible to entire program.  Not generally needed, since AIBO makes all unknown new variables global by default. Can be used to optionally assign a value.
+Define a global variable visible to entire program. Not generally needed, since LETTY makes all unknown new variables global by default. Can be used to optionally assign a value.
 
 Usage:
    `GLOBAL:<variable>[:<value>]`
@@ -826,7 +826,7 @@ VLOAD:somevar   // Load value stored in file /OPEN-R/APP/PC/AMS/SOMEVAR.SAV
 ```
 
 ### _Stack Commands_ <a name="stack"></a>
-The following commands operate on the stack. R-Code manages the stack in the same manner as Forth: The last item placed on the stack is the first one removed.
+The following commands operate on the stack. L-Code manages the stack in the same manner as Forth: The last item placed on the stack is the first one removed.
 
 |      Command     |                         Action                         |
 |:----------------:|:------------------------------------------------------:|
@@ -950,7 +950,7 @@ RND:somevar:1:10    // somevar set to random value between 1 and 10
 
 ### _Stack Operators_ <a name="soperators"></a>
 
-The following commands perform arithmetic on the stack. R-Code manages the stack in the same manner as Forth: The last item placed on the stack is the first one removed. To do math with the stack, first `PUSH` two values then perform the operation and `POP` the result. This is also called _postfix_ notation, as, `3 4 ADD`.
+The following commands perform arithmetic on the stack. L-Code manages the stack in the same manner as Forth: The last item placed on the stack is the first one removed. To do math with the stack, first `PUSH` two values then perform the operation and `POP` the result. This is also called _postfix_ notation, as, `3 4 ADD`.
 
 |        Variable        |                                     Value Parameter                                     |
 |:----------------------:|:---------------------------------------------------------------------------------------:|
@@ -996,8 +996,8 @@ POP:somevar         // result is 5 = 100/((4+6)*2)
 
 |               Variable              |                             Value Parameter                            |
 |:-----------------------------------:|:----------------------------------------------------------------------:|
-| AiboId                              | Least significant byte of WLAN IP address. Zero if not connected.      |
-| AiboType                            | 210, 220, 310, or 7                                                    |
+| LettyId                             | Least significant byte of WLAN IP address. Zero if not connected.      |
+| LettyType                           | 210, 220, 310, or 7                                                    |
 | Year                                | Year (2000 or later)                                                   |
 | Month                               | Month (1-12)                                                           |
 | Day                                 | Date (1-31)                                                            |
@@ -1017,11 +1017,11 @@ POP:somevar         // result is 5 = 100/((4+6)*2)
 | Pink_Ball_D                         | Distance to pink ball from nose camera (in millimeters)                |
 | AU_Voice                            | Set if voice command recognised (clear w/SET)                          |
 | AU_Voice_ID                         | Voice ID (1-53)                                                        |
-| AU_AiboSound                        | Set 1 if AiboSound detected (clear w/SET)                              |
-| AU_AiboSound_ID AiboSound ID (1-35) |                                                                        |
-| AU_AiboTone                         | Set 1 if AiboTone detected (clear w/SET)                               |
-| AU_AiboTone_ID                      | AiboTone ID (1-68)                                                     |
-| Temp_Hi                             | Set if temperature too high. AIBO will auto-shutdown in 20 seconds.    |
+| AU_LettySound                       | Set 1 if LettySound detected (clear w/SET)                             |
+| AU_LettySound_ID LettySoundID (1-35)|                                                                        |
+| AU_LettyTone                        | Set 1 if LettyTone detected (clear w/SET)                              |
+| AU_LettyTone_ID                     | LettyTone ID (1-68)                                                    |
+| Temp_Hi                             | Set if temperature too high. Letty will auto-shutdown in 20 seconds.   |
 | LFLeg_1                             | Left-front Hip Joint (front/back direction, in degrees)                |
 | LFLeg_2                             | Left-front Hip Joint (left/right direction, in degrees)                |
 | LFLeg_3                             | Left-front Knee Joint (degrees)                                        |
@@ -1057,7 +1057,7 @@ POP:somevar         // result is 5 = 100/((4+6)*2)
 
 ### _Platform-Specific Variables_ <a name="platform"></a>
 ```
-ERS-210
+CAR-10
    Head_Tilt       Head Up/Down Angle (degrees) 
    Head_Pan        Head Left/Right Angle (degrees)
    Head_Roll       Head Roll Angle (side-to-side, degrees)
@@ -1068,7 +1068,7 @@ ERS-210
    Tail_Pan        Tail: horizontal (left/right) angle [degrees]
    Tail_Tilt       Tail: Vertical (up/down) angle [degrees]
   
-ERS-220
+CAR-20
    Head_Tilt       Head: vertical (up-down) angle [degrees]
    Head_Pan        Head: horizontal (left-right) angle [degrees]
    Head_Roll       Head: roll angle [degrees]
@@ -1076,7 +1076,7 @@ ERS-220
    Jaw_OFF         Length of time face sensor was pressed [ms]
    Jaw_LONG        Face sensor was pressed for 3 seconds or longer (clear w/SET)    
   
-ERS-310
+CAR-30
    Head_Tilt       Head: vertical (up-down) angle 1 [degrees]
    Head_Tilt_2     Head: vertical (up-down) angle 2 [degrees]
    Head_Pan        Head: horizontal (left-right) angle [degrees]
@@ -1094,4 +1094,4 @@ ERS-310
    Tail_L_ON       Tail pressed left (clear w/SET)
 ```
 
-#### END
+#### END OF REFERENCE GUIDE
