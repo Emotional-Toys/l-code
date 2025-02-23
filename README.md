@@ -1,10 +1,10 @@
 # letty-code
 
-A simplified interpreted language for [letty](https://github.com/Emotional-Toys/animals-letty).
+A simplified interpreted language for dot and letty.
 
 ## About L-Code
 
-The L-CODE SDK offers an environment to execute a simplified interpreted scripting language that can be used to program dot and other kinds of personal robots. You can use sensor data, variables, L-CODE's built-in commands, and more. You can customize dot to respond in customized ways or create animations with only a few lines of code. L-CODE is an interpreted language, so it is not recommended for complex calculations. although it does natively using its stack. The L-CODE program can be executed by copying it to a dot programming memory wafer with the L-CODE system runtime files. You can upload an L-CODE script to your dot by using a Bluetooth. This is the operating construct for our robotic product offerings, such as letty and [dot](https://github.com/Emotional-Toys/animals-dot).
+The L-CODE SDK offers an environment to execute a simplified interpreted scripting language that can be used to program dot and other kinds of personal robots. You can use sensor data, variables, L-CODE's built-in commands, and more. You can customize dot to respond in customized ways or create animations with only a few lines of code. L-CODE is an interpreted language, so it is not recommended for complex calculations. although it does natively using its stack. The L-CODE program can be executed by copying it to a dot programming memory wafer with the L-CODE system runtime files. You can upload an L-CODE script to your dot by using a Bluetooth. This is the operating construct for our robotic product offerings, such as [letty](https://github.com/Emotional-Toys/animals-letty) and [dot](https://github.com/Emotional-Toys/animals-dot).
 
 The code reference guide for version 0.1 is [here](/Reference.md).
 
